@@ -1,0 +1,635 @@
+﻿<Window x:Class="FinalProjectTemplate1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FinalProjectTemplate1"
+        mc:Ignorable="d"
+        Title="Library Management System" Height="550" Width="725" ResizeMode="NoResize" Icon="Resources/favicon.ico">
+    <Grid>
+        <TabControl x:Name="tabControl" HorizontalAlignment="Right" Height="425" Margin="0,15,22,0" VerticalAlignment="Top" Width="675" SelectionChanged="TabControl_OnSelectionChanged">
+            <TabControl.Background>
+                <ImageBrush ImageSource="Resources/books.jpg"  Opacity="0.8"/>
+            </TabControl.Background>
+
+            <TabItem Header="Main Menu">
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Resources/bookIcon.jpg" Width="25" Height="25" Stretch="Fill" Opacity="0.3"/>
+                            <TextBlock Text="Main Menu" Margin="0,0,0,0" />
+                        </StackPanel>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition x:Name="MainRow0" Height="*"/>
+                        <RowDefinition x:Name="MainRow1" Height="*"/>
+                        <RowDefinition x:Name="MainRow2" Height="*"/>
+                        <RowDefinition x:Name="MainRow3" Height="*"/>
+                        <RowDefinition x:Name="MainRow4" Height="*"/>
+                        <RowDefinition x:Name="MainRow5" Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition x:Name="MainCol0" Width="*"/>
+                        <ColumnDefinition x:Name="MainCol1" Width="*"/>
+                        <ColumnDefinition x:Name="MainCol2" Width="*"/>
+                        <ColumnDefinition x:Name="MainCol3" Width="*"/>
+                        <ColumnDefinition x:Name="MainCol4" Width="*"/>
+                        <ColumnDefinition x:Name="MainCol5" Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="MainHeaderLabel" Content="Welcome to Main City Library" Grid.RowSpan="1" Grid.ColumnSpan="4" FontSize="30" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Tan">
+                    </Label>
+                    <Label x:Name="EmailLogInLabel" Content="Email:" Grid.RowSpan="1" Grid.ColumnSpan="1" FontSize="18" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom"  Background="DarkSeaGreen" Margin="3,3,3,3">
+                    </Label>
+                    <TextBox x:Name="EmailLogInText" Text="" Grid.RowSpan="1" Grid.ColumnSpan="2" FontSize="18" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="3,3,3,3" GotKeyboardFocus="EmailLogInText_OnGotKeyboardFocus">
+                    </TextBox>
+                    <Label x:Name="PasswordLogInLabel" Content="Password:" Grid.RowSpan="1" Grid.ColumnSpan="1" FontSize="18" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Top"  Background="DarkSeaGreen" Margin="3,3,3,3">
+                    </Label>
+                    <PasswordBox x:Name="PasswordLogInText" Grid.RowSpan="1" Grid.ColumnSpan="2" FontSize="18" Grid.Column="2" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="3,3,3,3" GotKeyboardFocus="PasswordLogInText_OnGotKeyboardFocus">
+                    </PasswordBox>
+                    <Button x:Name="SignInBtn" Content="Sign In" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Row="3" Grid.Column="1" Margin="15, 15, 15, 45" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="SignInBtn_OnClick">
+                    </Button>
+                    <Button x:Name="CancelBtn" Content="Cancel" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Row="3" Grid.Column="3" Margin="15, 15, 15, 45" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="CancelBtn_OnClick">
+                    </Button>
+                    <Button x:Name="SignUpBtn" Content="Sign Up" Grid.RowSpan="1" Grid.ColumnSpan="4" Grid.Row="4" Grid.Column="1" Margin="15, 0, 15, 0" FontSize="20" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Click="SignUpBtn_OnClick">
+                    </Button>
+                    <Button x:Name="CloseBtn" Content="Exit" Grid.RowSpan="1" Grid.ColumnSpan="4" Grid.Row="5" Grid.Column="1" Margin="15, 20, 15, 0" FontSize="20" HorizontalAlignment="Stretch" VerticalAlignment="Top" Click="CloseBtn_OnClick">
+                    </Button>
+
+                    <Button x:Name="SaveDatabaseBtn" Content="Save to Database" Grid.RowSpan="2" Grid.ColumnSpan="4" Grid.Row="3" Grid.Column="1" Margin="15, 15, 15, 45" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed"  Click="SaveDatabaseBtn_OnClick">
+                    </Button>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Book Rental System">
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Resources/bookIcon.jpg" Width="25" Height="25" Stretch="Fill" Opacity="0.3" />
+                            <TextBlock Text="Book Rental System" Margin="0,0,0,0" />
+                        </StackPanel>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition x:Name="RentalRow0" Height="*"/>
+                        <RowDefinition x:Name="RentalRow1" Height="*"/>
+                        <RowDefinition x:Name="RentalRow2" Height="*"/>
+                        <RowDefinition x:Name="RentalRow3" Height="*"/>
+                        <RowDefinition x:Name="RentalRow4" Height="*"/>
+                        <RowDefinition x:Name="RentalRow5" Height="*"/>
+                        <RowDefinition x:Name="RentalRow6" Height="*"/>
+                        <RowDefinition x:Name="RentalRow7" Height="*"/>
+                        <RowDefinition x:Name="RentalRow8" Height="*"/>
+                        <RowDefinition x:Name="RentalRow9" Height="*"/>
+                        <RowDefinition x:Name="RentalRow10" Height="*"/>
+                        <RowDefinition x:Name="RentalRow11" Height="*"/>
+                        <RowDefinition x:Name="RentalRow12" Height="*"/>
+                        <RowDefinition x:Name="RentalRow13" Height="*"/>
+                        <RowDefinition x:Name="RentalRow14" Height="*"/>
+                        <RowDefinition x:Name="RentalRow15" Height="*"/>
+                        <RowDefinition x:Name="RentalRow16" Height="*"/>
+                        <RowDefinition x:Name="RentalRow17" Height="*"/>
+                        <RowDefinition x:Name="RentalRow18" Height="*"/>
+                        <RowDefinition x:Name="RentalRow19" Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition x:Name="RentalCol0" Width="*"/>
+                        <ColumnDefinition x:Name="RentalCol1" Width="*"/>
+                        <ColumnDefinition x:Name="RentalCol2" Width="*"/>
+                        <ColumnDefinition x:Name="RentalCol3" Width="*"/>
+                        <ColumnDefinition x:Name="RentalCol4" Width="*"/>
+                        <ColumnDefinition x:Name="RentalCol5" Width="*"/>
+                        <ColumnDefinition x:Name="RentalCol6" Width="*"/>
+                        <ColumnDefinition x:Name="RentalCol7" Width="*"/>
+                        <ColumnDefinition x:Name="RentalCol8" Width="*"/>
+                        <ColumnDefinition x:Name="RentalCol9" Width="*"/>
+                        <ColumnDefinition x:Name="RentalCol10" Width="*"/>
+                        <ColumnDefinition x:Name="RentalCol11" Width="*"/>
+                        <ColumnDefinition x:Name="RentalCol12" Width="*"/>
+                        <ColumnDefinition x:Name="RentalCol13" Width="*"/>
+                        <ColumnDefinition x:Name="RentalCol14" Width="*"/>
+                        <ColumnDefinition x:Name="RentalCol15" Width="*"/>
+                        <ColumnDefinition x:Name="RentalCol16" Width="*"/>
+                        <ColumnDefinition x:Name="RentalCol17" Width="*"/>
+                        <ColumnDefinition x:Name="RentalCol18" Width="*"/>
+                        <ColumnDefinition x:Name="RentalCol19" Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="RentalHeaderLabel" Content="R e n t   A   B o o k" Grid.RowSpan="3" Grid.ColumnSpan="8" FontSize="30" Grid.Column="6" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Tan">
+                    </Label>
+                    <Label x:Name="RentBookByTitleLabel" Content="Rent By Title:" Grid.RowSpan="2" Grid.ColumnSpan="4" FontSize="12" Grid.Column="2" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="DarkSeaGreen">
+                    </Label>
+                    <ComboBox x:Name="RentBookByTitleCombo" Grid.RowSpan="2" Grid.ColumnSpan="8" FontSize="10" Grid.Column="10" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6" LostFocus="BookRentalTitleDropDownClosedMethod">
+                    </ComboBox>
+                    <Label x:Name="RentBookByISBNLabel" Content="Rent by ISBN:" Grid.RowSpan="2" Grid.ColumnSpan="4" FontSize="12" Grid.Column="2" Grid.Row="6" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="DarkSeaGreen">
+                    </Label>
+                    <ComboBox x:Name="RentBookByISBNCombo" Grid.RowSpan="2" Grid.ColumnSpan="8" FontSize="10" Grid.Column="10" Grid.Row="6" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6" LostFocus="BookRentalISBNDropDownClosedMethod">
+                    </ComboBox>
+                    <Label x:Name="RentalCustomerByPhoneNumberLabel" Content="Customer Phone Number:" Grid.RowSpan="2" Grid.ColumnSpan="4" FontSize="12" Grid.Column="2" Grid.Row="8" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="DarkSeaGreen">
+                    </Label>
+                    <ComboBox x:Name="PhoneAreaCodeRentalCombo" Grid.RowSpan="2" Grid.ColumnSpan="2" FontSize="10" Grid.Column="10" Grid.Row="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3,3,3,3">
+                    </ComboBox>
+                    <ComboBox x:Name="PhonePrefixRentalCombo" Grid.RowSpan="2" Grid.ColumnSpan="2" FontSize="10" Grid.Column="12" Grid.Row="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3,3,3,3">
+                    </ComboBox>
+                    <ComboBox x:Name="PhoneLineNumberRentalCombo" Grid.RowSpan="2" Grid.ColumnSpan="3" FontSize="10" Grid.Column="14" Grid.Row="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3,3,3,3">
+                    </ComboBox>
+                    <Button x:Name="RentABookBtn" Content="Rent" Grid.RowSpan="3" Grid.ColumnSpan="8" Grid.Row="16" Grid.Column="6" Margin="0,0,0,10" FontSize="30" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="RentABookBtn_OnClick">
+                    </Button>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Book Management System">
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Resources/bookIcon.jpg" Width="25" Height="25" Stretch="Fill" Opacity="0.3" />
+                            <TextBlock Text="Book Management System" Margin="0,0,0,0" />
+                        </StackPanel>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition x:Name="BookRow0" Height="*"/>
+                        <RowDefinition x:Name="BookRow1" Height="*"/>
+                        <RowDefinition x:Name="BookRow2" Height="*"/>
+                        <RowDefinition x:Name="BookRow3" Height="*"/>
+                        <RowDefinition x:Name="BookRow4" Height="*"/>
+                        <RowDefinition x:Name="BookRow5" Height="*"/>
+                        <RowDefinition x:Name="BookRow6" Height="*"/>
+                        <RowDefinition x:Name="BookRow7" Height="*"/>
+                        <RowDefinition x:Name="BookRow8" Height="*"/>
+                        <RowDefinition x:Name="BookRow9" Height="*"/>
+                        <RowDefinition x:Name="BookRow10" Height="*"/>
+                        <RowDefinition x:Name="BookRow11" Height="*"/>
+                        <RowDefinition x:Name="BookRow12" Height="*"/>
+                        <RowDefinition x:Name="BookRow13" Height="*"/>
+                        <RowDefinition x:Name="BookRow14" Height="*"/>
+                        <RowDefinition x:Name="BookRow15" Height="*"/>
+                        <RowDefinition x:Name="BookRow16" Height="*"/>
+                        <RowDefinition x:Name="BookRow17" Height="*"/>
+                        <RowDefinition x:Name="BookRow18" Height="*"/>
+                        <RowDefinition x:Name="BookRow19" Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition x:Name="BookCol0" Width="*"/>
+                        <ColumnDefinition x:Name="BookCol1" Width="*"/>
+                        <ColumnDefinition x:Name="BookCol2" Width="*"/>
+                        <ColumnDefinition x:Name="BookCol3" Width="*"/>
+                        <ColumnDefinition x:Name="BookCol4" Width="*"/>
+                        <ColumnDefinition x:Name="BookCol5" Width="*"/>
+                        <ColumnDefinition x:Name="BookCol6" Width="*"/>
+                        <ColumnDefinition x:Name="BookCol7" Width="*"/>
+                        <ColumnDefinition x:Name="BookCol8" Width="*"/>
+                        <ColumnDefinition x:Name="BookCol9" Width="*"/>
+                        <ColumnDefinition x:Name="BookCol10" Width="*"/>
+                        <ColumnDefinition x:Name="BookCol11" Width="*"/>
+                        <ColumnDefinition x:Name="BookCol12" Width="*"/>
+                        <ColumnDefinition x:Name="BookCol13" Width="*"/>
+                        <ColumnDefinition x:Name="BookCol14" Width="*"/>
+                        <ColumnDefinition x:Name="BookCol15" Width="*"/>
+                        <ColumnDefinition x:Name="BookCol16" Width="*"/>
+                        <ColumnDefinition x:Name="BookCol17" Width="*"/>
+                        <ColumnDefinition x:Name="BookCol18" Width="*"/>
+                        <ColumnDefinition x:Name="BookCol19" Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="BookHeaderLabel" Content="F i n d   A   B o o k" Grid.RowSpan="3" Grid.ColumnSpan="8" FontSize="30" Grid.Column="6" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Tan">
+                    </Label>
+
+                    <Label x:Name="BookISBNBookManagementLabel" Content="Book ISBN" Grid.RowSpan="2" Grid.ColumnSpan="3" FontSize="10" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6" Background="DarkSeaGreen">
+                    </Label>
+                    <ComboBox x:Name="BookISBNBookManagementCombo" Grid.RowSpan="2" Grid.ColumnSpan="5" FontSize="10" Grid.Column="5" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6" LostFocus="BookISBNDropDownClosedMethod">
+                    </ComboBox>
+
+                    <Label x:Name="BookTitleBookManagementLabel" Content="Book Title" Grid.RowSpan="2" Grid.ColumnSpan="3" FontSize="10" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6" Background="DarkSeaGreen">
+                    </Label>
+                    <ComboBox x:Name="BookTitleBookManagementCombo" Grid.RowSpan="2" Grid.ColumnSpan="5" FontSize="10" Grid.Column="5" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6" LostFocus="BookTitleDropDownClosedMethod">
+                    </ComboBox>
+                    <TextBox x:Name="BookTitleBookManagementText" Text="" Grid.RowSpan="2" Grid.ColumnSpan="5" FontSize="10" Grid.Column="12" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6" GotKeyboardFocus="ClearTextBoxMethod">
+                    </TextBox>
+
+                    <Label x:Name="BookAuthorBookManagementLabel" Content="Book Author" Grid.RowSpan="2" Grid.ColumnSpan="3" FontSize="10" Grid.Column="1" Grid.Row="7" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6" Background="DarkSeaGreen">
+                    </Label>
+                    <ComboBox x:Name="BookAuthorBookManagementCombo" Grid.RowSpan="2" Grid.ColumnSpan="5" FontSize="10" Grid.Column="5" Grid.Row="7" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6" LostFocus="BookAuthorDropDownClosedMethod">
+                    </ComboBox>
+                    <TextBox x:Name="BookAuthorBookManagementText" Text="" Grid.RowSpan="2" Grid.ColumnSpan="5" FontSize="10" Grid.Column="12" Grid.Row="7" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6" GotKeyboardFocus="ClearTextBoxMethod">
+                    </TextBox>
+
+                    <Label x:Name="BookPriceBookManagementLabel" Content="Book Price" Grid.RowSpan="2" Grid.ColumnSpan="3" FontSize="10" Grid.Column="1" Grid.Row="9" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6" Background="DarkSeaGreen">
+                    </Label>
+                    <ComboBox x:Name="BookPriceBookManagementCombo" Grid.RowSpan="2" Grid.ColumnSpan="5" FontSize="10" Grid.Column="5" Grid.Row="9" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6" LostFocus="BookPriceDropDownClosedMethod">
+                    </ComboBox>
+                    <TextBox x:Name="BookPriceBookManagementText" Text="" Grid.RowSpan="2" Grid.ColumnSpan="5" FontSize="10" Grid.Column="12" Grid.Row="9" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6" GotKeyboardFocus="ClearTextBoxMethod">
+                    </TextBox>
+
+                    <Label x:Name="BookStartDateBookManagementLabel" Content="Start Date" Grid.RowSpan="2" Grid.ColumnSpan="3" FontSize="10" Grid.Column="1" Grid.Row="11" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6" Background="DarkSeaGreen">
+                    </Label>
+                    <ComboBox x:Name="BookStartDateBookManagementCombo" Grid.RowSpan="2" Grid.ColumnSpan="5" FontSize="10" Grid.Column="5" Grid.Row="11" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6" LostFocus="BookStartDateDropDownClosedMethod">
+                    </ComboBox>
+                    <TextBox x:Name="BookStartDateBookManagementText" Text="" Grid.RowSpan="2" Grid.ColumnSpan="5" FontSize="10" Grid.Column="12" Grid.Row="11" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6" GotKeyboardFocus="ClearTextBoxMethod" LostKeyboardFocus="BookStartDateBookManagementText_OnLostKeyboardFocus">
+                    </TextBox>
+
+                    <Label x:Name="BookEndDateBookManagementLabel" Content="End Date" Grid.RowSpan="2" Grid.ColumnSpan="3" FontSize="10" Grid.Column="1" Grid.Row="13" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6" Background="DarkSeaGreen">
+                    </Label>
+                    <ComboBox x:Name="BookEndDateBookManagementCombo" Grid.RowSpan="2" Grid.ColumnSpan="5" FontSize="10" Grid.Column="5" Grid.Row="13" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6" LostFocus="BookEndDateDropDownClosedMethod">
+                    </ComboBox>
+                    <TextBox x:Name="BookEndDateBookManagementText" Text="" Grid.RowSpan="2" Grid.ColumnSpan="5" FontSize="10" Grid.Column="12" Grid.Row="13" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6" GotKeyboardFocus="ClearTextBoxMethod" LostKeyboardFocus="BookEndDateBookManagementText_OnLostKeyboardFocus">
+                    </TextBox>
+
+                    <Label x:Name="BookIsRentedBookManagementLabel" Content="Checked Out" Grid.RowSpan="2" Grid.ColumnSpan="3" FontSize="10" Grid.Column="1" Grid.Row="15" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6" Background="DarkSeaGreen">
+                    </Label>
+                    <ComboBox x:Name="BookIsRentedBookManagementCombo" Grid.RowSpan="2" Grid.ColumnSpan="5" FontSize="10" Grid.Column="5" Grid.Row="15" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6" LostFocus="BookIsRentedDropDownClosedMethod">
+                    </ComboBox>
+                    <TextBox x:Name="BookIsRentedBookManagementText" Text="" Grid.RowSpan="2" Grid.ColumnSpan="5" FontSize="10" Grid.Column="12" Grid.Row="15" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6" GotKeyboardFocus="ClearTextBoxMethod" LostKeyboardFocus="BookIsRentedBookManagementText_OnLostKeyboardFocus">
+                    </TextBox>
+
+
+                    <Button x:Name="UpdateBookManagementBtn" Content="Update Book" Grid.RowSpan="4" Grid.ColumnSpan="8" Grid.Row="17" Grid.Column="6" Margin="15, 20, 15, 0" FontSize="20" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="DarkSeaGreen" Click="UpdateBookManagementBtn_OnClick">
+                    </Button>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Customer Management System">
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Resources/bookIcon.jpg" Width="25" Height="25" Stretch="Fill" Opacity="0.3" />
+                            <TextBlock Text="Customer Management System" Margin="0,0,0,0" />
+                        </StackPanel>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition x:Name="CustomerRow0" Height="*"/>
+                        <RowDefinition x:Name="CustomerRow1" Height="*"/>
+                        <RowDefinition x:Name="CustomerRow2" Height="*"/>
+                        <RowDefinition x:Name="CustomerRow3" Height="*"/>
+                        <RowDefinition x:Name="CustomerRow4" Height="*"/>
+                        <RowDefinition x:Name="CustomerRow5" Height="*"/>
+                        <RowDefinition x:Name="CustomerRow6" Height="*"/>
+                        <RowDefinition x:Name="CustomerRow7" Height="*"/>
+                        <RowDefinition x:Name="CustomerRow8" Height="*"/>
+                        <RowDefinition x:Name="CustomerRow9" Height="*"/>
+                        <RowDefinition x:Name="CustomerRow10" Height="*"/>
+                        <RowDefinition x:Name="CustomerRow11" Height="*"/>
+                        <RowDefinition x:Name="CustomerRow12" Height="*"/>
+                        <RowDefinition x:Name="CustomerRow13" Height="*"/>
+                        <RowDefinition x:Name="CustomerRow14" Height="*"/>
+                        <RowDefinition x:Name="CustomerRow15" Height="*"/>
+                        <RowDefinition x:Name="CustomerRow16" Height="*"/>
+                        <RowDefinition x:Name="CustomerRow17" Height="*"/>
+                        <RowDefinition x:Name="CustomerRow18" Height="*"/>
+                        <RowDefinition x:Name="CustomerRow19" Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition x:Name="CustomerCol0" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerCol1" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerCol2" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerCol3" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerCol4" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerCol5" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerCol6" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerCol7" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerCol8" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerCol9" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerCol10" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerCol11" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerCol12" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerCol13" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerCol14" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerCol15" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerCol16" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerCol17" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerCol18" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerCol19" Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label x:Name="CustomerHeaderLabel" Content="F i n d   C u s t o m e r s" Grid.RowSpan="3" Grid.ColumnSpan="10" FontSize="30" Grid.Column="5" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Tan">
+                    </Label>
+                    <Label x:Name="PhoneNumberCustomerLabel" Content="Enter Phone Number to Search:" Grid.RowSpan="2" Grid.ColumnSpan="6" FontSize="12" Grid.Column="2" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="DarkSeaGreen">
+                    </Label>
+                    <TextBox x:Name="PhoneNumberCustomerText" Text="" Grid.RowSpan="2" Grid.ColumnSpan="8" FontSize="12" Grid.Column="10" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1,1,1,1" GotKeyboardFocus="TemplateMethod">
+                    </TextBox>
+
+                    <Button x:Name="FindCustomerBtn" Content="Search" Grid.RowSpan="4" Grid.ColumnSpan="8" Grid.Row="12" Grid.Column="6" Margin="0,0,0,10" FontSize="30" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="FindCustomerBtn_OnClick">
+                    </Button>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Sample">
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Resources/bookIcon.jpg" Width="25" Height="25" Stretch="Fill" Opacity="0.3" />
+                            <TextBlock Text="Sample" Margin="0,0,0,0" />
+                        </StackPanel>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition x:Name="SampleRow0" Height="*"/>
+                        <RowDefinition x:Name="SampleRow1" Height="*"/>
+                        <RowDefinition x:Name="SampleRow2" Height="*"/>
+                        <RowDefinition x:Name="SampleRow3" Height="*"/>
+                        <RowDefinition x:Name="SampleRow4" Height="*"/>
+                        <RowDefinition x:Name="SampleRow5" Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition x:Name="SampleCol0" Width="*"/>
+                        <ColumnDefinition x:Name="SampleCol1" Width="*"/>
+                        <ColumnDefinition x:Name="SampleCol2" Width="*"/>
+                        <ColumnDefinition x:Name="SampleCol3" Width="*"/>
+                        <ColumnDefinition x:Name="SampleCol4" Width="*"/>
+                        <ColumnDefinition x:Name="SampleCol5" Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="MySampleBtn1" Content="Sample 1" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Row="0" Grid.Column="0" Margin="5, 5, 5, 5" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="MySampleBtn_OnClick">
+                    </Button>
+                    <Button x:Name="MySampleBtn2" Content="Sample 2" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Row="0" Grid.Column="2" Margin="5, 5, 5, 5" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="MySampleBtn_OnClick">
+                    </Button>
+                    <Button x:Name="MySampleBtn3" Content="Sample 3" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Row="0" Grid.Column="4" Margin="5, 5, 5, 5" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="MySampleBtn_OnClick">
+                    </Button>
+                    <Button x:Name="MySampleBtn4" Content="Sample 4" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Row="2" Grid.Column="0" Margin="5, 5, 5, 5" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="MySampleBtn_OnClick">
+                    </Button>
+                    <Button x:Name="MySampleBtn5" Content="Sample 5" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Row="2" Grid.Column="2" Margin="5, 5, 5, 5" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="MySampleBtn_OnClick">
+                    </Button>
+                    <Button x:Name="MySampleBtn6" Content="Sample 6" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Row="2" Grid.Column="4" Margin="5, 5, 5, 5" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="MySampleBtn_OnClick">
+                    </Button>
+                    <Button x:Name="MySampleBtn7" Content="Sample 7" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Row="4" Grid.Column="0" Margin="5, 5, 5, 5" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="MySampleBtn_OnClick">
+                    </Button>
+                    <Button x:Name="MySampleBtn8" Content="Sample 8" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Row="4" Grid.Column="2" Margin="5, 5, 5, 5" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="MySampleBtn_OnClick">
+                    </Button>
+                    <Button x:Name="MySampleBtn9" Content="Sample 9" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Row="4" Grid.Column="4" Margin="5, 5, 5, 5" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="MySampleBtn_OnClick">
+                    </Button>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Register">
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Resources/bookIcon.jpg" Width="25" Height="25" Stretch="Fill" Opacity="0.3" />
+                            <TextBlock Text="Register" Margin="0,0,0,0" />
+                        </StackPanel>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition x:Name="RegisterRow0" Height="*"/>
+                        <RowDefinition x:Name="RegisterRow1" Height="*"/>
+                        <RowDefinition x:Name="RegisterRow2" Height="*"/>
+                        <RowDefinition x:Name="RegisterRow3" Height="*"/>
+                        <RowDefinition x:Name="RegisterRow4" Height="*"/>
+                        <RowDefinition x:Name="RegisterRow5" Height="*"/>
+                        <RowDefinition x:Name="RegisterRow6" Height="*"/>
+                        <RowDefinition x:Name="RegisterRow7" Height="*"/>
+                        <RowDefinition x:Name="RegisterRow8" Height="*"/>
+                        <RowDefinition x:Name="RegisterRow9" Height="*"/>
+                        <RowDefinition x:Name="RegisterRow10" Height="*"/>
+                        <RowDefinition x:Name="RegisterRow11" Height="*"/>
+                        <RowDefinition x:Name="RegisterRow12" Height="*"/>
+                        <RowDefinition x:Name="RegisterRow13" Height="*"/>
+                        <RowDefinition x:Name="RegisterRow14" Height="*"/>
+                        <RowDefinition x:Name="RegisterRow15" Height="*"/>
+                        <RowDefinition x:Name="RegisterRow16" Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition x:Name="RegisterCol0" Width="*"/>
+                        <ColumnDefinition x:Name="RegisterCol1" Width="*"/>
+                        <ColumnDefinition x:Name="RegisterCol2" Width="*"/>
+                        <ColumnDefinition x:Name="RegisterCol3" Width="*"/>
+                        <ColumnDefinition x:Name="RegisterCol4" Width="*"/>
+                        <ColumnDefinition x:Name="RegisterCol5" Width="*"/>
+                        <ColumnDefinition x:Name="RegisterCol6" Width="*"/>
+                        <ColumnDefinition x:Name="RegisterCol7" Width="*"/>
+                        <ColumnDefinition x:Name="RegisterCol8" Width="*"/>
+                        <ColumnDefinition x:Name="RegisterCol9" Width="*"/>
+                        <ColumnDefinition x:Name="RegisterCol10" Width="*"/>
+                        <ColumnDefinition x:Name="RegisterCol11" Width="*"/>
+                        <ColumnDefinition x:Name="RegisterCol12" Width="*"/>
+                        <ColumnDefinition x:Name="RegisterCol13" Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Label x:Name="RegisterHeaderLabel" Content="R E G I S T E R" Grid.RowSpan="2" Grid.ColumnSpan="4" FontSize="28" Grid.Column="5" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Tan">
+                    </Label>
+
+                    <Label x:Name="FirstNameRegisterLabel" Content="First Name:" Grid.RowSpan="2" Grid.ColumnSpan="2" FontSize="12" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="DarkSeaGreen">
+                    </Label>
+                    <TextBox x:Name="FirstNameRegisterText" Text="" Grid.RowSpan="2" Grid.ColumnSpan="4" FontSize="12" Grid.Column="2" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1,1,1,1" GotKeyboardFocus="TemplateMethod">
+                    </TextBox>
+
+                    <Label x:Name="LastNameRegisterLabel" Content="Last Name:" Grid.RowSpan="2" Grid.ColumnSpan="2" FontSize="12" Grid.Column="6" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="DarkSeaGreen">
+                    </Label>
+                    <TextBox x:Name="LastNameRegisterText" Text="" Grid.RowSpan="2" Grid.ColumnSpan="4" FontSize="12" Grid.Column="8" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1,1,1,1" GotKeyboardFocus="TemplateMethod">
+                    </TextBox>
+
+                    <Label x:Name="Address1RegisterLabel" Content="Address 1:" Grid.RowSpan="2" Grid.ColumnSpan="2" FontSize="12" Grid.Column="0" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="DarkSeaGreen">
+                    </Label>
+                    <TextBox x:Name="Address1RegisterText" Text="" Grid.RowSpan="2" Grid.ColumnSpan="4" FontSize="12" Grid.Column="2" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1,1,1,1" GotKeyboardFocus="TemplateMethod">
+                    </TextBox>
+
+                    <Label x:Name="CityRegisterLabel" Content="City:" Grid.RowSpan="2" Grid.ColumnSpan="2" FontSize="12" Grid.Column="6" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="DarkSeaGreen">
+                    </Label>
+                    <TextBox x:Name="CityRegisterText" Text="" Grid.RowSpan="2" Grid.ColumnSpan="3" FontSize="12" Grid.Column="8" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1,1,1,1" GotKeyboardFocus="TemplateMethod">
+                    </TextBox>
+
+                    <Label x:Name="StateRegisterLabel" Content="State:" Grid.RowSpan="1" Grid.ColumnSpan="1" FontSize="10" Grid.Column="11" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="4,0,0,0" Background="DarkSeaGreen">
+                    </Label>
+                    <ComboBox x:Name="StatesRegisterCombo" Grid.RowSpan="1" Grid.ColumnSpan="2" FontSize="12" Grid.Column="12" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0">
+                        <ComboBoxItem IsSelected="True">AL - Alabama</ComboBoxItem>
+                        <ComboBoxItem>AK - Alaska</ComboBoxItem>
+                        <ComboBoxItem>AZ - Arizona</ComboBoxItem>
+                        <ComboBoxItem>AR - Arkansas</ComboBoxItem>
+                        <ComboBoxItem>CA - California</ComboBoxItem>
+                        <ComboBoxItem>CO - Colorado</ComboBoxItem>
+                        <ComboBoxItem>CT - Connecticut</ComboBoxItem>
+                        <ComboBoxItem>DE - Delaware</ComboBoxItem>
+                        <ComboBoxItem>DC - District Of Columbia</ComboBoxItem>
+                        <ComboBoxItem>FL - Florida</ComboBoxItem>
+                        <ComboBoxItem>GA - Georgia</ComboBoxItem>
+                        <ComboBoxItem>HI - Hawaii</ComboBoxItem>
+                        <ComboBoxItem>ID - Idaho</ComboBoxItem>
+                        <ComboBoxItem>IL - Illinois</ComboBoxItem>
+                        <ComboBoxItem>IN - Indiana</ComboBoxItem>
+                        <ComboBoxItem>IA - Iowa</ComboBoxItem>
+                        <ComboBoxItem>KS - Kansas</ComboBoxItem>
+                        <ComboBoxItem>KY - Kentucky</ComboBoxItem>
+                        <ComboBoxItem>LA - Louisiana</ComboBoxItem>
+                        <ComboBoxItem>ME - Maine</ComboBoxItem>
+                        <ComboBoxItem>MD - Maryland</ComboBoxItem>
+                        <ComboBoxItem>MA - Massachusetts</ComboBoxItem>
+                        <ComboBoxItem>MI - Michigan</ComboBoxItem>
+                        <ComboBoxItem>MN - Minnesota</ComboBoxItem>
+                        <ComboBoxItem>MS - Mississippi</ComboBoxItem>
+                        <ComboBoxItem>MO - Missouri</ComboBoxItem>
+                        <ComboBoxItem>MT - Montana</ComboBoxItem>
+                        <ComboBoxItem>NE - Nebraska</ComboBoxItem>
+                        <ComboBoxItem>NV - Nevada</ComboBoxItem>
+                        <ComboBoxItem>NH - New Hampshire</ComboBoxItem>
+                        <ComboBoxItem>NJ - New Jersey</ComboBoxItem>
+                        <ComboBoxItem>NM - New Mexico</ComboBoxItem>
+                        <ComboBoxItem>NY - New York</ComboBoxItem>
+                        <ComboBoxItem>NC - North Carolina</ComboBoxItem>
+                        <ComboBoxItem>ND - North Dakota</ComboBoxItem>
+                        <ComboBoxItem>OH - Ohio</ComboBoxItem>
+                        <ComboBoxItem>OK - Oklahoma</ComboBoxItem>
+                        <ComboBoxItem>OR - Oregon</ComboBoxItem>
+                        <ComboBoxItem>PA - Pennsylvania</ComboBoxItem>
+                        <ComboBoxItem>RI - Rhode Island</ComboBoxItem>
+                        <ComboBoxItem>SC - South Carolina</ComboBoxItem>
+                        <ComboBoxItem>SD - South Dakota</ComboBoxItem>
+                        <ComboBoxItem>TN - Tennessee</ComboBoxItem>
+                        <ComboBoxItem>TX - Texas</ComboBoxItem>
+                        <ComboBoxItem>UT - Utah</ComboBoxItem>
+                        <ComboBoxItem>VT - Vermont</ComboBoxItem>
+                        <ComboBoxItem>VA - Virginia</ComboBoxItem>
+                        <ComboBoxItem>WA - Washington</ComboBoxItem>
+                        <ComboBoxItem>WV - West Virginia</ComboBoxItem>
+                        <ComboBoxItem>WI - Wisconsin</ComboBoxItem>
+                        <ComboBoxItem>WY - Wyoming</ComboBoxItem>
+                    </ComboBox>
+
+                    <Label x:Name="ZipRegisterLabel" Content="Zip Code:" Grid.RowSpan="2" Grid.ColumnSpan="2" FontSize="12" Grid.Column="6" Grid.Row="7" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="DarkSeaGreen">
+                    </Label>
+                    <TextBox x:Name="ZipRegisterText" Text="" Grid.RowSpan="2" Grid.ColumnSpan="3" FontSize="12" Grid.Column="8" Grid.Row="7" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1,1,1,1" GotKeyboardFocus="TemplateMethod">
+                    </TextBox>
+
+                    <Label x:Name="EmailRegisterLabel" Content="Email:" Grid.RowSpan="2" Grid.ColumnSpan="2" FontSize="12" Grid.Column="0" Grid.Row="7" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="DarkSeaGreen">
+                    </Label>
+                    <TextBox x:Name="EmailRegisterText" Text="" Grid.RowSpan="2" Grid.ColumnSpan="4" FontSize="12" Grid.Column="2" Grid.Row="7" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1,1,1,1" GotKeyboardFocus="TemplateMethod">
+                    </TextBox>
+
+                    <Label x:Name="TelephoneRegisterLabel" Content="Phone Number:" Grid.RowSpan="1" Grid.ColumnSpan="2" FontSize="10" Grid.Column="0" Grid.Row="9" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="DarkSeaGreen">
+                    </Label>
+
+                    <ComboBox x:Name="PhoneAreaCodeRegisterCombo" Grid.RowSpan="1" Grid.ColumnSpan="1" FontSize="10" Grid.Column="2" Grid.Row="9" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0">
+                    </ComboBox>
+
+                    <ComboBox x:Name="PhonePrefixRegisterCombo" Grid.RowSpan="1" Grid.ColumnSpan="1" FontSize="10" Grid.Column="3" Grid.Row="9" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0">
+                    </ComboBox>
+
+                    <ComboBox x:Name="PhoneLineNumberRegisterCombo" Grid.RowSpan="1" Grid.ColumnSpan="1" FontSize="10" Grid.Column="4" Grid.Row="9" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0">
+                    </ComboBox>
+
+                    <Label x:Name="GenderRegisterLabel" Content="Gender:" Grid.RowSpan="1" Grid.ColumnSpan="2" FontSize="10" Grid.Column="6" Grid.Row="9" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="4,0,0,0"  Background="DarkSeaGreen">
+                    </Label>
+                    <ComboBox x:Name="GenderRegisterCombo" Grid.RowSpan="1" Grid.ColumnSpan="3" FontSize="12" Grid.Column="8" Grid.Row="9" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,0,0">
+                        <ComboBoxItem IsSelected="True">Male</ComboBoxItem>
+                        <ComboBoxItem>Female</ComboBoxItem>
+                        <ComboBoxItem>Other</ComboBoxItem>
+                    </ComboBox>
+                    <Label x:Name="PasswordRegisterLabel" Content="Password:" Grid.RowSpan="2" Grid.ColumnSpan="2" FontSize="12" Grid.Column="0" Grid.Row="11" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="DarkSeaGreen">
+                    </Label>
+                    <PasswordBox x:Name="Password1RegisterText" Grid.RowSpan="2" Grid.ColumnSpan="4" FontSize="12" Grid.Column="2" Grid.Row="11" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1,1,1,1" GotKeyboardFocus="TemplateMethod">
+                    </PasswordBox>
+                    <PasswordBox x:Name="Password2RegisterText" Grid.RowSpan="2" Grid.ColumnSpan="4" FontSize="12" Grid.Column="8" Grid.Row="11" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1,1,1,1" GotKeyboardFocus="TemplateMethod">
+                    </PasswordBox>
+
+                    <Button x:Name="SignUpRegisterBtn" Content="SIGN UP" Grid.RowSpan="2" Grid.ColumnSpan="4" Grid.Row="15" Grid.Column="1" Margin="0,0,0,10" FontSize="22" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="SignUpRegisterBtn_OnClick">
+                    </Button>
+
+                    <Button x:Name="ClearRegisterBtn" Content="Clear" Grid.RowSpan="2" Grid.ColumnSpan="4" Grid.Row="15" Grid.Column="8" Margin="0,0,0,10" FontSize="22" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="ClearRegisterBtn_OnClick">
+                    </Button>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Book Details">
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Resources/bookIcon.jpg" Width="25" Height="25" Stretch="Fill" Opacity="0.3" />
+                            <TextBlock Text="Book Details" Margin="0,0,0,0" />
+                        </StackPanel>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition x:Name="BookDetailRow0" Height="*"/>
+                        <RowDefinition x:Name="BookDetailRow1" Height="*"/>
+                        <RowDefinition x:Name="BookDetailRow2" Height="*"/>
+                        <RowDefinition x:Name="BookDetailRow3" Height="*"/>
+                        <RowDefinition x:Name="BookDetailRow4" Height="*"/>
+                        <RowDefinition x:Name="BookDetailRow5" Height="*"/>
+                        <RowDefinition x:Name="BookDetailRow6" Height="*"/>
+                        <RowDefinition x:Name="BookDetailRow7" Height="*"/>
+                        <RowDefinition x:Name="BookDetailRow8" Height="*"/>
+                        <RowDefinition x:Name="BookDetailRow9" Height="*"/>
+                        <RowDefinition x:Name="BookDetailRow10" Height="*"/>
+                        <RowDefinition x:Name="BookDetailRow11" Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition x:Name="BookDetailCol0" Width="*"/>
+                        <ColumnDefinition x:Name="BookDetailCol1" Width="*"/>
+                        <ColumnDefinition x:Name="BookDetailCol2" Width="*"/>
+                        <ColumnDefinition x:Name="BookDetailCol3" Width="*"/>
+                        <ColumnDefinition x:Name="BookDetailCol4" Width="*"/>
+                        <ColumnDefinition x:Name="BookDetailCol5" Width="*"/>
+                        <ColumnDefinition x:Name="BookDetailCol6" Width="*"/>
+                        <ColumnDefinition x:Name="BookDetailCol7" Width="*"/>
+                        <ColumnDefinition x:Name="BookDetailCol8" Width="*"/>
+                        <ColumnDefinition x:Name="BookDetailCol9" Width="*"/>
+                        <ColumnDefinition x:Name="BookDetailCol10" Width="*"/>
+                        <ColumnDefinition x:Name="BookDetailCol11" Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox
+                        Name="BookDetailsTextBox" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Text="" Grid.RowSpan="9" Grid.ColumnSpan="12" FontSize="14" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1,1,1,1">
+                    </TextBox>
+
+                    <Button x:Name="ClearBookDetailBtn" Content="Clear Search" Grid.RowSpan="1" Grid.ColumnSpan="4" Grid.Row="11" Grid.Column="4" Margin="0,0,0,0" FontSize="18" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="ClearBookDetailBtn_OnClick">
+                    </Button>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Customer Details">
+                <TabItem.HeaderTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="Resources/bookIcon.jpg" Width="25" Height="25" Stretch="Fill" Opacity="0.3" />
+                            <TextBlock Text="Customer Details" Margin="0,0,0,0" />
+                        </StackPanel>
+                    </DataTemplate>
+                </TabItem.HeaderTemplate>
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition x:Name="CustomerDetailRow0" Height="*"/>
+                        <RowDefinition x:Name="CustomerDetailRow1" Height="*"/>
+                        <RowDefinition x:Name="CustomerDetailRow2" Height="*"/>
+                        <RowDefinition x:Name="CustomerDetailRow3" Height="*"/>
+                        <RowDefinition x:Name="CustomerDetailRow4" Height="*"/>
+                        <RowDefinition x:Name="CustomerDetailRow5" Height="*"/>
+                        <RowDefinition x:Name="CustomerDetailRow6" Height="*"/>
+                        <RowDefinition x:Name="CustomerDetailRow7" Height="*"/>
+                        <RowDefinition x:Name="CustomerDetailRow8" Height="*"/>
+                        <RowDefinition x:Name="CustomerDetailRow9" Height="*"/>
+                        <RowDefinition x:Name="CustomerDetailRow10" Height="*"/>
+                        <RowDefinition x:Name="CustomerDetailRow11" Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition x:Name="CustomerDetailCol0" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerDetailCol1" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerDetailCol2" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerDetailCol3" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerDetailCol4" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerDetailCol5" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerDetailCol6" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerDetailCol7" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerDetailCol8" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerDetailCol9" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerDetailCol10" Width="*"/>
+                        <ColumnDefinition x:Name="CustomerDetailCol11" Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox
+                        Name="CustomerDetailsTextBox" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Text="" Grid.RowSpan="9" Grid.ColumnSpan="12" FontSize="14" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1,1,1,1">
+                    </TextBox>
+
+                    <Button x:Name="ClearCustomerDetailBtn" Content="Clear Search" Grid.RowSpan="1" Grid.ColumnSpan="4" Grid.Row="11" Grid.Column="4" Margin="0,0,0,0" FontSize="18" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="ClearCustomerDetailBtn_OnClick">
+                    </Button>
+                </Grid>
+            </TabItem>
+
+        </TabControl>
+
+    </Grid>
+</Window>

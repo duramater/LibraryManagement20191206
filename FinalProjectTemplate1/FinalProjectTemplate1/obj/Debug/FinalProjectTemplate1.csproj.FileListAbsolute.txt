@@ -1,0 +1,72 @@
+C:\Users\LiuCheWei\Documents\Visual Studio 2015\Projects\IU 308\Each Slide\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\bin\Debug\FinalProjectTemplate1.exe.config
+C:\Users\LiuCheWei\Documents\Visual Studio 2015\Projects\IU 308\Each Slide\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\bin\Debug\FinalProjectTemplate1.exe
+C:\Users\LiuCheWei\Documents\Visual Studio 2015\Projects\IU 308\Each Slide\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\bin\Debug\FinalProjectTemplate1.pdb
+C:\Users\LiuCheWei\Documents\Visual Studio 2015\Projects\IU 308\Each Slide\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.csprojResolveAssemblyReference.cache
+C:\Users\LiuCheWei\Documents\Visual Studio 2015\Projects\IU 308\Each Slide\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\MainWindow.g.cs
+C:\Users\LiuCheWei\Documents\Visual Studio 2015\Projects\IU 308\Each Slide\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\App.g.cs
+C:\Users\LiuCheWei\Documents\Visual Studio 2015\Projects\IU 308\Each Slide\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1_MarkupCompile.cache
+C:\Users\LiuCheWei\Documents\Visual Studio 2015\Projects\IU 308\Each Slide\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1_MarkupCompile.lref
+C:\Users\LiuCheWei\Documents\Visual Studio 2015\Projects\IU 308\Each Slide\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\MainWindow.baml
+C:\Users\LiuCheWei\Documents\Visual Studio 2015\Projects\IU 308\Each Slide\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.g.resources
+C:\Users\LiuCheWei\Documents\Visual Studio 2015\Projects\IU 308\Each Slide\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.Properties.Resources.resources
+C:\Users\LiuCheWei\Documents\Visual Studio 2015\Projects\IU 308\Each Slide\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.csproj.GenerateResource.Cache
+C:\Users\LiuCheWei\Documents\Visual Studio 2015\Projects\IU 308\Each Slide\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.exe
+C:\Users\LiuCheWei\Documents\Visual Studio 2015\Projects\IU 308\Each Slide\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.pdb
+C:\Users\LiuCheWei\source\repos\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\bin\Debug\FinalProjectTemplate1.exe.config
+C:\Users\LiuCheWei\source\repos\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\bin\Debug\FinalProjectTemplate1.exe
+C:\Users\LiuCheWei\source\repos\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\bin\Debug\FinalProjectTemplate1.pdb
+C:\Users\LiuCheWei\source\repos\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.csprojAssemblyReference.cache
+C:\Users\LiuCheWei\source\repos\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\MainWindow.g.cs
+C:\Users\LiuCheWei\source\repos\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\App.g.cs
+C:\Users\LiuCheWei\source\repos\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1_MarkupCompile.cache
+C:\Users\LiuCheWei\source\repos\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1_MarkupCompile.lref
+C:\Users\LiuCheWei\source\repos\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\MainWindow.baml
+C:\Users\LiuCheWei\source\repos\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.g.resources
+C:\Users\LiuCheWei\source\repos\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.Properties.Resources.resources
+C:\Users\LiuCheWei\source\repos\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.csproj.GenerateResource.cache
+C:\Users\LiuCheWei\source\repos\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.csproj.CoreCompileInputs.cache
+C:\Users\LiuCheWei\source\repos\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.exe
+C:\Users\LiuCheWei\source\repos\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.pdb
+F:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\bin\Debug\FinalProjectTemplate1.exe.config
+F:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\bin\Debug\FinalProjectTemplate1.exe
+F:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\bin\Debug\FinalProjectTemplate1.pdb
+F:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\MainWindow.g.cs
+F:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\App.g.cs
+F:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1_MarkupCompile.cache
+F:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1_MarkupCompile.lref
+F:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\MainWindow.baml
+F:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.g.resources
+F:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.Properties.Resources.resources
+F:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.csproj.GenerateResource.cache
+F:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.csproj.CoreCompileInputs.cache
+F:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.exe
+F:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.pdb
+E:\CodeMentor\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\bin\Debug\FinalProjectTemplate1.exe
+E:\CodeMentor\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\bin\Debug\FinalProjectTemplate1.exe.config
+E:\CodeMentor\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\bin\Debug\FinalProjectTemplate1.pdb
+E:\CodeMentor\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\MainWindow.g.cs
+E:\CodeMentor\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\App.g.cs
+E:\CodeMentor\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1_MarkupCompile.cache
+E:\CodeMentor\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1_MarkupCompile.lref
+E:\CodeMentor\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\MainWindow.baml
+E:\CodeMentor\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.g.resources
+E:\CodeMentor\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.Properties.Resources.resources
+E:\CodeMentor\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.csproj.GenerateResource.cache
+E:\CodeMentor\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.csproj.CoreCompileInputs.cache
+E:\CodeMentor\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.exe
+E:\CodeMentor\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.pdb
+H:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\bin\Debug\FinalProjectTemplate1.exe.config
+H:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\bin\Debug\FinalProjectTemplate1.exe
+H:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\bin\Debug\FinalProjectTemplate1.pdb
+H:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.csprojAssemblyReference.cache
+H:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\MainWindow.g.cs
+H:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\App.g.cs
+H:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1_MarkupCompile.cache
+H:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1_MarkupCompile.lref
+H:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\MainWindow.baml
+H:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.g.resources
+H:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.Properties.Resources.resources
+H:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.csproj.GenerateResource.cache
+H:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.csproj.CoreCompileInputs.cache
+H:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.exe
+H:\_Desktop201807100818\Codementor\Mentees\MinSuk\FinalProjectTemplate1\FinalProjectTemplate1\FinalProjectTemplate1\obj\Debug\FinalProjectTemplate1.pdb
