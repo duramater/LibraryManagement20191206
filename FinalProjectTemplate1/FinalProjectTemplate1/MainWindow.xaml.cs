@@ -6,14 +6,21 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation.Peers;
+using System.Windows.Automation.Provider;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.VisualBasic;
+using ListBox = System.Windows.Forms.ListBox;
+using MessageBox = System.Windows.MessageBox;
+using TextBox = System.Windows.Controls.TextBox;
 
 namespace FinalProjectTemplate1
 {
@@ -22,12 +29,23 @@ namespace FinalProjectTemplate1
 	/// </summary>
 	public partial class MainWindow : Window
 	{
+		private const int TAB_MAIN_MENU = 0;
+		private const int TAB_BOOK_RENTAL = 1;
+		private const int TAB_BOOK_MANAGEMENT = 2;
+		private const int TAB_CUSTOMER_MANAGEMENT = 3;
+		private const int TAB_REGISTER = 4;
+		private const int TAB_BOOK_DETAILS = 5;
+		private const int TAB_CUSTOMER_DETAILS = 6;
+
+		private bool dirtyDatabase = false;
+
+
 		private static bool RegisterPopulated = false;
 		private static bool loaded = false;
 		private static bool BooksAdded = false;
 
 		private static Book[] Books;
-		private static Customer[] Customers;
+		private static LinkedList<Customer> Customers = new LinkedList<Customer>();
 		private static LinkedList<Customer> CustomerSearchResults = new LinkedList<Customer>();
 		public MainWindow()
 		{
@@ -60,10 +78,15 @@ namespace FinalProjectTemplate1
 
 		private void SaveDatabaseBtn_OnClick(object sender, RoutedEventArgs e)
 		{
+			if (!dirtyDatabase)
+			{
+				MessageBox.Show("Everything is up to date, nothing to update");
+				return;
+			}
 			try
 			{
-				string CustomersOutputFilePath = "../../Resources/customers1.csv";
-				string BooksOutputFilePath = "../../Resources/books1.csv";
+				string CustomersOutputFilePath = "../../Resources/customers.csv";
+				string BooksOutputFilePath = "../../Resources/books.csv";
 				string recordStr = "";
 
 				StreamWriter BookstreamWriter = new StreamWriter(BooksOutputFilePath);
@@ -77,7 +100,6 @@ namespace FinalProjectTemplate1
 					recordStr += book.WeeklyRentCost + ",";
 					recordStr += book.DailyRentCost + ",";
 					recordStr += book.PageCount + ",";
-					recordStr += book.PublishDate + ",";
 					recordStr += book.Description + ",";
 					recordStr += book.Author + ",";
 					recordStr += book.Category + ",";
@@ -91,25 +113,31 @@ namespace FinalProjectTemplate1
 				BookstreamWriter.Close();
 
 				StreamWriter CustomertreamWriter = new StreamWriter(CustomersOutputFilePath);
-				for (int i = 0; i < Customers.Length; i++)//each (Customer customer in Customers)
+				//for (int i = 0; i < Customers.Count; i++)//each (Customer customer in Customers)
+				foreach (var customer in Customers)
 				{
 					recordStr = "";
-					recordStr += Customers[i].FirstName + ",";
-					recordStr += Customers[i].LastName + ",";
-					recordStr += Customers[i].Address + ",";
-					recordStr += Customers[i].City + ",";
-					recordStr += Customers[i].State + ",";
-					recordStr += Customers[i].ZipCode + ",";
-					recordStr += Customers[i].PhoneNumber + ",";
-					recordStr += Customers[i].Email + ",";
-					recordStr += Customers[i].Gender + ",";
-					recordStr += Customers[i].Password + ",";
-					recordStr += Customers[i].FirstBook == null ? "None" : Customers[i].FirstBook.ID + ",";
-					recordStr += Customers[i].SecondBook == null ? "None" : Customers[i].SecondBook.ID + ",";
+					recordStr += customer.FirstName + ",";
+					recordStr += customer.LastName + ",";
+					recordStr += customer.Address + ",";
+					recordStr += customer.City + ",";
+					recordStr += customer.State.Substring(0, 2) + ",";
+					recordStr += customer.ZipCode + ",";
+					recordStr += customer.PhoneNumber + ",";
+					recordStr += customer.Email + ",";
+					recordStr += customer.Gender.Substring(0, 1) + ",";
+					recordStr += customer.Password + ",";
+					recordStr += customer.Employment.Substring(0, 1) + ",";
+					recordStr += customer.FirstBook == null ? "0," : customer.FirstBook.ID + ",";
+					recordStr += customer.SecondBook == null ? "0," : customer.SecondBook.ID + ",";
 					recordStr += ".";
 					CustomertreamWriter.WriteLine(recordStr);
 				}
 				CustomertreamWriter.Close();
+
+				StatusNotificationLabel.Content = "Everything is Up To Date";
+				StatusNotificationLabel.Background = System.Windows.Media.Brushes.Peru;
+				StatusNotificationLabel.Foreground = System.Windows.Media.Brushes.LawnGreen;
 			}
 			catch (Exception exc)
 			{
@@ -140,7 +168,7 @@ namespace FinalProjectTemplate1
 
 		private void SignUpBtn_OnClick(object sender, RoutedEventArgs e)
 		{
-			Dispatcher.BeginInvoke((Action)(() => tabControl.SelectedIndex = 5));
+			Dispatcher.BeginInvoke((Action)(() => tabControl.SelectedIndex = TAB_REGISTER));
 			PopulateRegister();
 		}
 
@@ -182,31 +210,41 @@ namespace FinalProjectTemplate1
 			Books[locator].IsCheckedOut = BookIsRentedBookManagementText.Text;
 			Books[locator].CheckOutDate = new DateFormat(BookStartDateBookManagementText.Text);
 			Books[locator].CheckOutDuration = Books[locator].CheckOutDate.DaysApart(new DateFormat(BookEndDateBookManagementText.Text));
-
 		}
 		
 
 		private void TabControl_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			if(tabControl.SelectedIndex == 2)
-			{
-				PopulateBooks();
-			}
 
-
-			if (tabControl.SelectedIndex == 1)
+			if (tabControl.SelectedIndex == TAB_BOOK_RENTAL)
 			{
 				PopulateBooks();
 				PopulateRegister();
 			}
-
-
-			if (tabControl.SelectedIndex == 5)
+			if(tabControl.SelectedIndex == TAB_BOOK_MANAGEMENT)
 			{
-				Dispatcher.BeginInvoke((Action)(() => tabControl.SelectedIndex = 5));
+				PopulateBooks();
+			}
+
+			if (tabControl.SelectedIndex == TAB_REGISTER)
+			{
+				Dispatcher.BeginInvoke((Action)(() => tabControl.SelectedIndex = TAB_REGISTER));
 				PopulateRegister();
 			}
 
+			if (tabControl.SelectedIndex == TAB_CUSTOMER_MANAGEMENT)
+			{
+				PhoneNumberCustomerText.Clear();
+				LastNameCustomerText.Clear();
+				LastNameCustomerRadio.IsChecked = false;
+				PhoneNumberCustomerRadio.IsChecked = true;
+				PhoneNumberCustomerLabel.Visibility = Visibility.Visible;
+				PhoneNumberCustomerText.Visibility = Visibility.Visible;
+				LastNameCustomerLabel.Visibility = Visibility.Collapsed;
+				LastNameCustomerText.Visibility = Visibility.Collapsed;
+				PhoneNumberCustomerRadioText.Background = System.Windows.Media.Brushes.Aquamarine;
+				LastNameCustomerRadioText.Background = System.Windows.Media.Brushes.DimGray;
+			}
 		}
 
 		private void PopulateBooks()
@@ -274,7 +312,7 @@ namespace FinalProjectTemplate1
 						for (int k = 0; k < 10; k++)
 						{
 							PhoneAreaCodeRegisterCombo.Items.Add(i + "" + j + "" + k);
-							PhoneAreaCodeRentalCombo.Items.Add(i + "" + j + "" + k);
+							// PhoneAreaCodeRentalCombo.Items.Add(i + "" + j + "" + k);
 						}
 					}
 				}
@@ -285,7 +323,7 @@ namespace FinalProjectTemplate1
 						for (int k = 0; k < 10; k++)
 						{
 							PhonePrefixRegisterCombo.Items.Add(i + "" + j + "" + k);
-							PhonePrefixRentalCombo.Items.Add(i + "" + j + "" + k);
+							// PhonePrefixRentalCombo.Items.Add(i + "" + j + "" + k);
 						}
 					}
 				}
@@ -298,10 +336,18 @@ namespace FinalProjectTemplate1
 							for (int m = 0; m < 10; m++)
 							{
 								PhoneLineNumberRegisterCombo.Items.Add(i + "" + j + "" + k + "" + m);
-								PhoneLineNumberRentalCombo.Items.Add(i + "" + j + "" + k + "" + m);
+								// PhoneLineNumberRentalCombo.Items.Add(i + "" + j + "" + k + "" + m);
 							}
 						}
 					}
+				}
+
+				foreach (Customer customer in Customers)
+				{
+					FirstLastNameRentalCombo.Items.Add(customer.LastName + " " + customer.LastName);
+					PhoneAreaCodeRentalCombo.Items.Add(customer.PhoneNumber.Substring(0, 3));
+					PhonePrefixRentalCombo.Items.Add(customer.PhoneNumber.Substring(4, 3));
+					PhoneLineNumberRentalCombo.Items.Add(customer.PhoneNumber.Substring(8, 4));
 				}
 
 				PhoneAreaCodeRegisterCombo.SelectedIndex = 0;
@@ -325,6 +371,9 @@ namespace FinalProjectTemplate1
 			PhoneLineNumberRegisterCombo.SelectedIndex = 0;
 			Password1RegisterText.Clear();
 			Password2RegisterText.Clear();
+			NoDiscountCustomerRadio.IsChecked = false;
+			VeteranDiscountCustomerRadio.IsChecked = false;
+			StudentDiscountCustomerRadio.IsChecked = false;
 		}
 
 		private void FindCustomers()
@@ -348,7 +397,7 @@ namespace FinalProjectTemplate1
 				sr.Close();
 				if (customersCount > 0)
 				{
-					Customers = new Customer[customersCount];
+					Customers = new LinkedList<Customer>();
 				}
 				
 				//Pass the file path and file name to the StreamReader constructor
@@ -360,29 +409,28 @@ namespace FinalProjectTemplate1
 				//Continue to read until you reach end of file
 				string[] lineValues;
 				int entryTracker = 0;
-				for (int i = 0; i < customersCount; i++)
-				{
-					Customers[entryTracker++] = new Customer();
-				}
 				
 				entryTracker = 0;
 				while (line != null)
 				{
-					int j = 0;
+					Customer customer = new Customer();
+					//int j = 0;
 					lineValues = line.Split(',');
-					Customers[entryTracker].FirstName = lineValues[0];
-					Customers[entryTracker].LastName = lineValues[1];
-					Customers[entryTracker].Address = lineValues[2];
-					Customers[entryTracker].City = lineValues[3];
-					Customers[entryTracker].State = lineValues[4];
-					Customers[entryTracker].ZipCode = lineValues[5];
-					Customers[entryTracker].PhoneNumber = lineValues[6];
-					Customers[entryTracker].Email = lineValues[7];
-					Customers[entryTracker].Gender = lineValues[8];
-					Customers[entryTracker].Password = lineValues[9];
-					Customers[entryTracker].FirstBook.ISBN = string.IsNullOrEmpty(lineValues[10]) ? "None" : lineValues[10];
-					Customers[entryTracker].SecondBook.ISBN = string.IsNullOrEmpty(lineValues[11]) ? "None" : lineValues[11];
-					
+					customer.FirstName = lineValues[0];
+					customer.LastName = lineValues[1];
+					customer.Address = lineValues[2];
+					customer.City = lineValues[3];
+					customer.State = lineValues[4];
+					customer.ZipCode = lineValues[5];
+					customer.PhoneNumber = lineValues[6];
+					customer.Email = lineValues[7];
+					customer.Gender = lineValues[8];
+					customer.Password = lineValues[9];
+					customer.Employment = lineValues[10];
+					customer.FirstBook.ISBN = string.IsNullOrEmpty(lineValues[11]) ? "None" : lineValues[10];
+					customer.SecondBook.ISBN = string.IsNullOrEmpty(lineValues[12]) ? "None" : lineValues[11];
+
+					Customers.AddLast(customer);
 
 					//Read the next line
 					line = sr.ReadLine();
@@ -452,11 +500,10 @@ namespace FinalProjectTemplate1
 					Books[entryTracker].WeeklyRentCost = double.Parse(lineValues[4]);
 					Books[entryTracker].DailyRentCost = double.Parse(lineValues[5]);
 					Books[entryTracker].PageCount = (lineValues[6].Length > 0 ? int.Parse(lineValues[6]) : 0);
-					Books[entryTracker].PublishDate = new DateFormat(lineValues[7]);
-					Books[entryTracker].Description = lineValues[8];
-					Books[entryTracker].Author = lineValues[9];
-					Books[entryTracker].Category = lineValues[10];
-					Books[entryTracker].IsCheckedOut = lineValues[11];
+					Books[entryTracker].Description = lineValues[7];
+					Books[entryTracker].Author = lineValues[8];
+					Books[entryTracker].Category = lineValues[9];
+					Books[entryTracker].IsCheckedOut = lineValues[10];
 					
 					//Read the next line
 					line = sr.ReadLine();
@@ -476,8 +523,104 @@ namespace FinalProjectTemplate1
 			}
 		}
 
-		private void UpdateBookManagementBtn_OnClick(object sender, RoutedEventArgs e)
+		private void AddBookManagementBtn_OnClick(object sender, RoutedEventArgs e)
 		{
+			BookISBNBookManagementCombo.Visibility = Visibility.Collapsed;
+			BookTitleBookManagementCombo.Visibility = Visibility.Collapsed;
+			BookAuthorBookManagementCombo.Visibility = Visibility.Collapsed;
+			BookPriceBookManagementCombo.Visibility = Visibility.Collapsed;
+			BookStartDateBookManagementCombo.Visibility = Visibility.Collapsed;
+			BookEndDateBookManagementCombo.Visibility = Visibility.Collapsed;
+			BookIsRentedBookManagementCombo.Visibility = Visibility.Collapsed;
+			UpdateBookManagementBtn.Visibility = Visibility.Collapsed;
+			DeleteBookManagementBtn.Visibility = Visibility.Collapsed;
+
+			BookISBNBookManagementText.Visibility = Visibility.Visible;
+            SaveBookManagementBtn.Visibility = Visibility.Visible;
+            AddBookManagementBtn.Visibility = Visibility.Collapsed;
+
+			BookISBNBookManagementText.SetValue(Grid.ColumnProperty, 5);
+			BookTitleBookManagementText.SetValue(Grid.ColumnProperty, 5);
+			BookAuthorBookManagementText.SetValue(Grid.ColumnProperty, 5);
+			BookPriceBookManagementText.SetValue(Grid.ColumnProperty, 5);
+			BookStartDateBookManagementText.SetValue(Grid.ColumnProperty, 5);
+			BookEndDateBookManagementText.SetValue(Grid.ColumnProperty, 5);
+			BookIsRentedBookManagementText.SetValue(Grid.ColumnProperty, 5);
+
+			BookISBNBookManagementText.Clear();
+			BookTitleBookManagementText.Clear();
+			BookAuthorBookManagementText.Clear();
+			BookPriceBookManagementText.Clear();
+			BookStartDateBookManagementText.Clear();
+			BookEndDateBookManagementText.Clear();
+			BookIsRentedBookManagementText.Clear();
+
+			UpdateBookManagementBtn.Visibility = Visibility.Collapsed;
+			CancelBookManagementBtn.Visibility = Visibility.Visible;
+		}
+
+        private void SaveBookManagementBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+			Book newBook = new Book();
+			newBook.ID = Books.Length;
+			newBook.ISBN = BookISBNBookManagementText.Text;
+			newBook.Title = BookTitleBookManagementText.Text;
+			newBook.Author = BookAuthorBookManagementText.Text;
+			newBook.Price = Convert.ToDouble(BookPriceBookManagementText.Text);
+			newBook.WeeklyRentCost = newBook.Price * 0.12;
+			newBook.DailyRentCost = newBook.Price * 0.12 * 0.3;
+			newBook.CheckOutDate = new DateFormat("1900-01-01");
+			newBook.CheckOutDuration = 0;
+			newBook.IsCheckedOut = "N";
+
+			Book[] tempBooks = new Book[Books.Length + 1];
+
+			for (int i = 0; i < Books.Length; i++)
+			{
+				tempBooks[i] = Books[i];
+			}
+
+			tempBooks[Books.Length] = newBook;
+
+			Books = tempBooks;
+
+			BooksAdded = false;
+			PopulateBooks();
+			BookISBNBookManagementCombo.SelectedIndex = 0;
+
+			dirtyDatabase = true;
+
+	        StatusNotificationLabel.Content = "Database is outdated, log in as admin and save your changes";
+	        StatusNotificationLabel.Background = System.Windows.Media.Brushes.Maroon;
+	        StatusNotificationLabel.Foreground = System.Windows.Media.Brushes.White;
+
+			ButtonAutomationPeer peer = new ButtonAutomationPeer(CancelBookManagementBtn);
+            IInvokeProvider invokeProv = peer.GetPattern(PatternInterface.Invoke) as IInvokeProvider;
+            invokeProv.Invoke();
+        }
+
+        private void UpdateBookManagementBtn_OnClick(object sender, RoutedEventArgs e)
+		{
+			BookISBNBookManagementCombo.Visibility = Visibility.Visible;
+			BookTitleBookManagementCombo.Visibility = Visibility.Visible;
+			BookAuthorBookManagementCombo.Visibility = Visibility.Visible;
+			BookPriceBookManagementCombo.Visibility = Visibility.Visible;
+			BookStartDateBookManagementCombo.Visibility = Visibility.Visible;
+			BookEndDateBookManagementCombo.Visibility = Visibility.Visible;
+			BookIsRentedBookManagementCombo.Visibility = Visibility.Visible;
+
+			BookISBNBookManagementText.Visibility = Visibility.Collapsed;
+			CancelBookManagementBtn.Visibility = Visibility.Collapsed;
+			
+
+			BookISBNBookManagementText.SetValue(Grid.ColumnProperty, 12);
+			BookTitleBookManagementText.SetValue(Grid.ColumnProperty, 12);
+			BookAuthorBookManagementText.SetValue(Grid.ColumnProperty, 12);
+			BookPriceBookManagementText.SetValue(Grid.ColumnProperty, 12);
+			BookStartDateBookManagementText.SetValue(Grid.ColumnProperty, 12);
+			BookEndDateBookManagementText.SetValue(Grid.ColumnProperty, 12);
+			BookIsRentedBookManagementText.SetValue(Grid.ColumnProperty, 12);
+
 			string inputVal;
 			int locator = BookISBNBookManagementCombo.SelectedIndex;
 			if (!string.IsNullOrEmpty(BookTitleBookManagementText.Text))
@@ -532,15 +675,112 @@ namespace FinalProjectTemplate1
 
 			BookDetailsTextBox.Text += "\t\tBook Updated\n" + Books[locator].GetBookDetails() +
 									   "\n====================================\n";
+			StatusNotificationLabel.Content = "Database is outdated, log in as admin and save your changes";
+			StatusNotificationLabel.Background = System.Windows.Media.Brushes.Maroon;
+			StatusNotificationLabel.Foreground = System.Windows.Media.Brushes.White;
+			Dispatcher.BeginInvoke((Action)(() => tabControl.SelectedIndex = TAB_BOOK_DETAILS));
 
-			Dispatcher.BeginInvoke((Action)(() => tabControl.SelectedIndex = 6));
+        }
 
+        private void DeleteBookManagementBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            DialogResult dialogResult = System.Windows.Forms.MessageBox.Show("Are you sure?", "Delete Confirmation", System.Windows.Forms.MessageBoxButtons.YesNo);
+            if (dialogResult == System.Windows.Forms.DialogResult.Yes)
+            {
+	            Books[BookISBNBookManagementCombo.SelectedIndex] = null;
+	            Book[] temp = new Book [Books.Length - 1];
+	            for (int i = 0; i < Books.Length - 1; i++)
+	            {
+		            temp[i] = Books[i + 1];
+	            }
+
+	            Books = temp;
+	            BooksAdded = false;
+				PopulateBooks();
+				BookISBNBookManagementCombo.SelectedIndex = 0;
+
+				dirtyDatabase = true;
+
+				StatusNotificationLabel.Content = "Database is outdated, log in as admin and save your changes";
+				StatusNotificationLabel.Background = System.Windows.Media.Brushes.Maroon;
+				StatusNotificationLabel.Foreground = System.Windows.Media.Brushes.White;
+
+				System.Windows.MessageBox.Show("Deleted");
+            }
+            else
+            {
+                System.Windows.MessageBox.Show("Delete operation Terminated");
+            }
+        }
+
+        private void CancelBookManagementBtn_OnClick(object sender, RoutedEventArgs e)
+        {
+            UpdateBookManagementBtn.Visibility = Visibility.Visible;
+
+			BookISBNBookManagementText.Clear();
+			BookTitleBookManagementText.Clear();
+			BookAuthorBookManagementText.Clear();
+			BookPriceBookManagementText.Clear();
+			BookStartDateBookManagementText.Clear();
+			BookEndDateBookManagementText.Clear();
+			BookIsRentedBookManagementText.Clear();
+
+
+			BookISBNBookManagementText.SetValue(Grid.ColumnProperty, 12);
+			BookTitleBookManagementText.SetValue(Grid.ColumnProperty, 12);
+			BookAuthorBookManagementText.SetValue(Grid.ColumnProperty, 12);
+			BookPriceBookManagementText.SetValue(Grid.ColumnProperty, 12);
+			BookStartDateBookManagementText.SetValue(Grid.ColumnProperty, 12);
+			BookEndDateBookManagementText.SetValue(Grid.ColumnProperty, 12);
+			BookIsRentedBookManagementText.SetValue(Grid.ColumnProperty, 12);
+
+			BookISBNBookManagementCombo.Visibility = Visibility.Visible;
+			BookTitleBookManagementCombo.Visibility = Visibility.Visible;
+			BookAuthorBookManagementCombo.Visibility = Visibility.Visible;
+			BookPriceBookManagementCombo.Visibility = Visibility.Visible;
+			BookStartDateBookManagementCombo.Visibility = Visibility.Visible;
+			BookEndDateBookManagementCombo.Visibility = Visibility.Visible;
+			BookIsRentedBookManagementCombo.Visibility = Visibility.Visible;
+			DeleteBookManagementBtn.Visibility = Visibility.Visible;
+
+			BookISBNBookManagementText.Visibility = Visibility.Collapsed;
+			CancelBookManagementBtn.Visibility = Visibility.Collapsed;
+            SaveBookManagementBtn.Visibility = Visibility.Collapsed;
+            AddBookManagementBtn.Visibility = Visibility.Visible;
+		}
+
+        private void PhoneAreaCodeRentalComboClosedMethod(object sender, EventArgs e)
+        {
+			PhonePrefixRentalCombo.SelectedIndex = PhoneAreaCodeRentalCombo.SelectedIndex;
+			PhoneLineNumberRentalCombo.SelectedIndex = PhoneAreaCodeRentalCombo.SelectedIndex;
+			FirstLastNameRentalCombo.SelectedIndex = PhoneAreaCodeRentalCombo.SelectedIndex;
+		}
+
+        private void PhonePrefixRentalComboClosedMethod(object sender, EventArgs e)
+		{
+			PhoneAreaCodeRentalCombo.SelectedIndex = PhonePrefixRentalCombo.SelectedIndex;
+			PhoneLineNumberRentalCombo.SelectedIndex = PhonePrefixRentalCombo.SelectedIndex;
+			FirstLastNameRentalCombo.SelectedIndex = PhonePrefixRentalCombo.SelectedIndex;
+		}
+
+        private void PhoneLineNumberRentalComboClosedMethod(object sender, EventArgs e)
+		{
+			PhoneAreaCodeRentalCombo.SelectedIndex = PhoneLineNumberRentalCombo.SelectedIndex;
+			PhonePrefixRentalCombo.SelectedIndex = PhoneLineNumberRentalCombo.SelectedIndex;
+			FirstLastNameRentalCombo.SelectedIndex = PhoneLineNumberRentalCombo.SelectedIndex;
+		}
+
+        private void FirstLastNameRentalComboClosedMethod(object sender, EventArgs e)
+		{
+			PhoneAreaCodeRentalCombo.SelectedIndex = FirstLastNameRentalCombo.SelectedIndex;
+			PhonePrefixRentalCombo.SelectedIndex = FirstLastNameRentalCombo.SelectedIndex;
+			PhoneLineNumberRentalCombo.SelectedIndex = FirstLastNameRentalCombo.SelectedIndex;
 		}
 
 		private void BookISBNDropDownClosedMethod(object sender, EventArgs e)
-		{
-			UpdateComboBoxMethod(BookISBNBookManagementCombo.SelectedIndex);
-		}
+        {
+	        UpdateComboBoxMethod(BookISBNBookManagementCombo.SelectedIndex);
+        }
 
 		private void BookRentalISBNDropDownClosedMethod(object sender, EventArgs e)
 		{
@@ -582,11 +822,9 @@ namespace FinalProjectTemplate1
 			UpdateComboBoxMethod(BookEndDateBookManagementCombo.SelectedIndex);
 		}
 
-		//FindCustomerBtn_OnClick
-
 		private void RentABookBtn_OnClick(object sender, RoutedEventArgs e)
 		{
-			string searchString = PhoneAreaCodeRentalCombo.SelectedValue + "" + PhonePrefixRentalCombo.SelectedValue + "" + PhoneLineNumberRentalCombo;
+			string searchString = PhoneAreaCodeRentalCombo.SelectedValue.ToString() + "" + PhonePrefixRentalCombo.SelectedValue.ToString() + "" + PhoneLineNumberRentalCombo.SelectedValue.ToString();
 			string customerPhoneNumber = "";
 			int selectedBook = RentBookByTitleCombo.SelectedIndex;
 			if (Books[selectedBook].IsCheckedOut.ToUpper().Equals("Y"))
@@ -594,26 +832,59 @@ namespace FinalProjectTemplate1
 				MessageBox.Show("This book is already checked out");
 				return;
 			}
-			for (int i = 0; i < Customers.Length; i++)
+			foreach (Customer customer in Customers)
 			{
-				if (Customers[i].PhoneNumber.Length > 0)
+				if (customer.PhoneNumber.Length > 0)
 				{
-					customerPhoneNumber = Customers[i].PhoneNumber;
+					customerPhoneNumber = customer.PhoneNumber;
 					customerPhoneNumber = customerPhoneNumber.Substring(0, 3) + customerPhoneNumber.Substring(4, 3) +
 										  customerPhoneNumber.Substring(8, 4);
 					if (customerPhoneNumber.Substring(0, searchString.Length).Equals(searchString))
 					{
-						if (Customers[i].FirstBook.ISBN.Length <= 0)
+						if (customer.addBookRental(Books[selectedBook]))
 						{
+							double rentalTotal = Books[selectedBook].WeeklyRentCost;
+							if (customer.Employment.ToUpper().Equals("V"))
+							{
+								rentalTotal *= 0.8;
+							}
+							else if (customer.Employment.ToUpper().Equals("S"))
+							{
+								rentalTotal *= 0.9;
+							}
+
+							String emp = "";
+							if (customer.Employment.ToUpper().Equals("N"))
+								emp = "Valued Customer - Everyday low prices";
+							else if (customer.Employment.ToUpper().Equals("V"))
+								emp = "Veteran - 20% discount";
+							else if (customer.Employment.ToUpper().Equals("S"))
+								emp = "Student - 10% discount";
 							Books[selectedBook].IsCheckedOut = "Y";
-							Customers[i].FirstBook = Books[selectedBook];
-							return;
-						}
-						else if (Customers[i].SecondBook.ISBN.Length <= 0)
-						{
-							Books[selectedBook].IsCheckedOut = "Y";
-							Customers[i].SecondBook = Books[selectedBook];
-							return;
+							DateTime currentDate = DateTime.Now;
+							Books[selectedBook].CheckOutDate =
+								new DateFormat(currentDate.Year + "-" + currentDate.Month + "-" + currentDate.Day);
+							Books[selectedBook].CheckOutDuration = 7;
+
+							string lastSearches = CustomerDetailsTextBox.Text;
+							CustomerDetailsTextBox.Clear();
+							CustomerDetailsTextBox.Text += "\t\tSummary of your Rental\n";
+							CustomerDetailsTextBox.Text +=
+								"Customer Name: " + customer.FirstName + " " + customer.LastName;
+							CustomerDetailsTextBox.Text +=
+								"\nRental Details:\n " + Books[selectedBook].GetBookDetails();
+							CustomerDetailsTextBox.Text += "\nToday's Total: $" + rentalTotal.ToString("F2") + " (" + emp + ")";
+							CustomerDetailsTextBox.Text += "\n========================================================\n";
+							CustomerDetailsTextBox.Text += lastSearches;
+
+							dirtyDatabase = true;
+
+							StatusNotificationLabel.Content = "Database is outdated, log in as admin and save your changes";
+							StatusNotificationLabel.Background = System.Windows.Media.Brushes.Maroon;
+							StatusNotificationLabel.Foreground = System.Windows.Media.Brushes.White;
+							Dispatcher.BeginInvoke((Action)(() => tabControl.SelectedIndex = TAB_BOOK_DETAILS));
+
+							Dispatcher.BeginInvoke((Action)(() => tabControl.SelectedIndex = TAB_CUSTOMER_DETAILS));
 						}
 					}
 				}
@@ -622,61 +893,164 @@ namespace FinalProjectTemplate1
 
 		private void FindCustomerBtn_OnClick(object sender, RoutedEventArgs e)
 		{
-			string searchString = PhoneNumberCustomerText.Text;
+			string searchByPhoneString = PhoneNumberCustomerText.Text;
+			string searchByLastNameString = LastNameCustomerText.Text;
+			string searchField;
 			string tempTargetString;
 			string lastSearches = CustomerDetailsTextBox.Text;
 			CustomerDetailsTextBox.Clear();
 			CustomerSearchResults = new LinkedList<Customer>();
-			try
+			if (PhoneNumberCustomerRadio.IsChecked == true)
 			{
-				Regex regex = new Regex(@"[1-9]\d{0,8}");
-				Match match = regex.Match(searchString);
-				if (match.Success)
+				String tempString = "";
+				for (int i = 0; i < searchByPhoneString.Length; i++)
 				{
-					for (int i = 0; i < Customers.Length; i++)
+					if (searchByPhoneString[i] == '-' || searchByPhoneString[i] == ' ' || searchByPhoneString[i] == '(' || searchByPhoneString[i] == ')')
 					{
-						if (Customers[i].PhoneNumber.Length > 0)
+						continue;
+					}
+					tempString += searchByPhoneString[i];
+				}
+				searchByPhoneString = tempString;
+				try
+				{
+					Regex regex = new Regex(@"[1-9]\d{0,8}");
+					Match match = regex.Match(searchByPhoneString);
+					if (match.Success)
+					{
+						foreach (Customer customer in Customers)
 						{
-							tempTargetString = Customers[i].PhoneNumber;
-							tempTargetString = tempTargetString.Substring(0, 3) + tempTargetString.Substring(4, 3) +
-											   tempTargetString.Substring(8, 4);
-							if (tempTargetString.Substring(0, searchString.Length).Equals(searchString))
+							if (customer.PhoneNumber.Length > 0)
 							{
-								CustomerSearchResults.AddLast(Customers[i]);
+								tempTargetString = customer.PhoneNumber;
+								tempTargetString = tempTargetString.Substring(0, 3) + tempTargetString.Substring(4, 3) +
+								                   tempTargetString.Substring(8, 4);
+								if (tempTargetString.Substring(0, searchByPhoneString.Length).Equals(searchByPhoneString))
+								{
+									CustomerSearchResults.AddLast(customer);
+								}
+							}
+						}
+						tempString = "**********";
+						searchByPhoneString += tempString.Substring(searchByPhoneString.Length);
+						searchByPhoneString = searchByPhoneString.Substring(0, 3) + "-" + searchByPhoneString.Substring(3, 3) +
+						                      "-" + searchByPhoneString.Substring(6);
+						CustomerDetailsTextBox.Text += "\n\t\tSearching Phone Numbers starting with: \"" + searchByPhoneString + "\"\n";
+						if (CustomerSearchResults.Count > 0)
+						{
+							CustomerDetailsTextBox.Text += "\n" +
+							                               $"{"FirstName", -12} {"LastName", -15} {"PhoneNumber", -15} {"Email", -25} {"Gender", -2}" +
+							                               $" {"ISBN",-15} {"Title",-20} {"Start Date",-15} {"End Date",-15} {"ISBN",-15} {"Title",-20} {"Start Date",-15} {"End Date",-15}\n" +
+							                               $"================================================================================================================\n";
+							foreach (Customer customer in CustomerSearchResults)
+							{
+								CustomerDetailsTextBox.Text += "\n" +
+								                               $"--{customer.FirstName, -12} {customer.LastName, -15} {customer.PhoneNumber, -15} {customer.Email, -25} {customer.Gender, -2}";
+								if (customer.getRentedBooksCount() > 0)
+								{
+									CustomerDetailsTextBox.Text += $" {customer.getRentedBooks()[0].ISBN, -15} {customer.getRentedBooks()[0].Title, -20} " +
+									                               $"{customer.getRentedBooks()[0].CheckOutDate.tostring(), -15} " +
+									                               $"{customer.getRentedBooks()[0].CheckOutDate.AddDays(7).tostring(), -15}";
+									if (customer.getRentedBooksCount() > 1)
+									{
+										CustomerDetailsTextBox.Text += $" {customer.getRentedBooks()[1].ISBN, -15} {customer.getRentedBooks()[1].Title, -20} " +
+										                               $"{customer.getRentedBooks()[1].CheckOutDate.tostring(), -15} " +
+										                               $"{customer.getRentedBooks()[1].CheckOutDate.AddDays(7).tostring(), -15}";
+									}
+								}
+							}
+						}
+						else
+						{
+							CustomerDetailsTextBox.Text += "No customers found with matching phone number";
+						}
+					}
+					else
+					{
+						CustomerDetailsTextBox.Text += "Phone number can only contain up to 10 digits, hyphens, parentheses and spaces";
+						CustomerDetailsTextBox.Text += "Please enter a valid phone number format, or first few digits of valid phone number format" +
+						                               "\n(000)000-0000" +
+						                               "\n000 000 0000" +
+						                               "\n000-000-0000";
+					}
+				}
+				catch (Exception ex)
+				{
+
+				}
+			}
+			else if (LastNameCustomerRadio.IsChecked == true)
+			{
+				if (searchByLastNameString.Length > 0)
+				{
+					foreach (Customer customer in Customers)
+					{
+						if (customer.LastName.Length > 0 && customer.LastName.Length >= searchByLastNameString.Length)
+						{
+							tempTargetString = customer.LastName;
+							if (tempTargetString.Substring(0, searchByLastNameString.Length).ToLower().Equals(searchByLastNameString.ToLower()))
+							{
+								CustomerSearchResults.AddLast(customer);
 							}
 						}
 					}
+					CustomerDetailsTextBox.Text += "\n\t\tSearching Last Names starting with: \"" + searchByLastNameString.ToUpper() + "\"\n";
+					if (CustomerSearchResults.Count > 0)
+					{
+						CustomerDetailsTextBox.Text += "\n" +
+						                               $"{"FirstName",-12} {"LastName",-15} {"PhoneNumber",-15} {"Email",-25} {"Gender",-2}" +
+						                               $" {"ISBN",-15} {"Title",-20} {"Start Date",-15} {"End Date",-15} {"ISBN",-15} {"Title",-20} {"Start Date",-15} {"End Date",-15}\n" +
+						                               $"================================================================================================================\n";
+						foreach (Customer customer in CustomerSearchResults)
+						{
+							CustomerDetailsTextBox.Text += "\n" +
+							                               $"--{customer.FirstName,-12} {customer.LastName,-15} {customer.PhoneNumber,-15} {customer.Email,-25} {customer.Gender,-2}";
+							if (customer.getRentedBooksCount() > 0)
+							{
+								CustomerDetailsTextBox.Text += $" {customer.getRentedBooks()[0].ISBN,-15} {customer.getRentedBooks()[0].Title,-20} " +
+								                               $"{customer.getRentedBooks()[0].CheckOutDate.tostring(),-15} " +
+								                               $"{customer.getRentedBooks()[0].CheckOutDate.AddDays(7).tostring(),-15}";
+								if (customer.getRentedBooksCount() > 1)
+								{
+									CustomerDetailsTextBox.Text += $" {customer.getRentedBooks()[1].ISBN,-15} {customer.getRentedBooks()[1].Title,-20} " +
+									                               $"{customer.getRentedBooks()[1].CheckOutDate.tostring(),-15} " +
+									                               $"{customer.getRentedBooks()[1].CheckOutDate.AddDays(7).tostring(),-15}";
+								}
+							}
+						}
+					}
+					else
+					{
+						CustomerDetailsTextBox.Text += "No customers found with matching last name";
+					}
+					CustomerDetailsTextBox.Text += "\n========================================================\n";
+					CustomerDetailsTextBox.Text += lastSearches;
 				}
-			}
-			catch (Exception ex)
-			{
-
-			}
-			CustomerDetailsTextBox.Text += "\n\t\tSearching [" + searchString + "]\n";
-			foreach (Customer customer in CustomerSearchResults)
-			{
-				CustomerDetailsTextBox.Text += "\n" +
-				   "Name: " + customer.FirstName + " " + customer.LastName + ", Email: " +
-				   customer.Email + ", Phone: " +
-				   customer.PhoneNumber;
+				else
+				{
+					CustomerDetailsTextBox.Text += "Last names must be at least one character long";
+				}
 			}
 
 			CustomerDetailsTextBox.Text += "\n========================================================\n";
 			CustomerDetailsTextBox.Text += lastSearches;
 
-			Dispatcher.BeginInvoke((Action)(() => tabControl.SelectedIndex = 7));
+			Dispatcher.BeginInvoke((Action)(() => tabControl.SelectedIndex = TAB_CUSTOMER_DETAILS));
 		}
 
 		private void ClearCustomerDetailBtn_OnClick(object sender, RoutedEventArgs e)
 		{
 			CustomerDetailsTextBox.Text = "";
-			Dispatcher.BeginInvoke((Action)(() => tabControl.SelectedIndex = 3));
+			PhoneNumberCustomerText.Clear();
+			LastNameCustomerText.Clear();
+			Dispatcher.BeginInvoke((Action)(() => tabControl.SelectedIndex = TAB_CUSTOMER_MANAGEMENT));
 		}
 
 		private void ClearBookDetailBtn_OnClick(object sender, RoutedEventArgs e)
 		{
 			BookDetailsTextBox.Text = "";
-		}
+            Dispatcher.BeginInvoke((Action)(() => tabControl.SelectedIndex = TAB_BOOK_MANAGEMENT));
+        }
 
 		private void SignUpRegisterBtn_OnClick(object sender, RoutedEventArgs e)
 		{
@@ -738,25 +1112,19 @@ namespace FinalProjectTemplate1
 				newCustomer.LastName = LastNameRegisterText.Text;
 				newCustomer.Address = Address1RegisterText.Text;
 				newCustomer.City = CityRegisterText.Text;
-				newCustomer.State = StatesRegisterCombo.SelectedValue.ToString();
+				newCustomer.State = StatesRegisterCombo.Text.ToString();
 				newCustomer.ZipCode = ZipRegisterText.Text;
 				newCustomer.Email = EmailRegisterText.Text;
 				newCustomer.PhoneNumber = PhoneAreaCodeRegisterCombo.SelectedValue.ToString() +
 					  "-" + PhonePrefixRegisterCombo.SelectedValue.ToString() +
 					  "-" + PhoneLineNumberRegisterCombo.SelectedValue.ToString();
-				newCustomer.Gender = GenderRegisterCombo.SelectedValue.ToString();
+				newCustomer.Gender = GenderRegisterCombo.Text.ToString();
 				newCustomer.Password = Password1RegisterText.Password;
+				newCustomer.Employment = VeteranDiscountCustomerRadio.IsChecked == true ? "V" : StudentDiscountCustomerRadio.IsChecked == true ? "S" : "N";
 				newCustomer.FirstBook = null;
 				newCustomer.SecondBook = null;
-				Customer[] tempCustomer = new Customer[Customers.Length + 1];
-				for (int i = 0; i < Customers.Length; i++)
-				{
-					tempCustomer[i] = new Customer();
-					tempCustomer[i] = Customers[i];
-				}
+				Customers.AddLast(newCustomer);
 
-				tempCustomer[Customers.Length] = newCustomer;
-				Customers = tempCustomer;
 				FirstNameRegisterText.Clear();
 				LastNameRegisterText.Clear();
 				Address1RegisterText.Clear();
@@ -770,6 +1138,9 @@ namespace FinalProjectTemplate1
 				GenderRegisterCombo.SelectedIndex = -1;
 				Password1RegisterText.Clear();
 				Password2RegisterText.Clear();
+				VeteranDiscountCustomerRadio.IsChecked = false;
+				StudentDiscountCustomerRadio.IsChecked = false;
+				NoDiscountCustomerRadio.IsChecked = true;
 			}
 		}
 
@@ -823,7 +1194,53 @@ namespace FinalProjectTemplate1
 				MessageBox.Show("Dates must not be retrospective");
 			}
 		}
+
+		private void PhoneNumberCustomerRadio_OnClick(object sender, RoutedEventArgs e)
+		{
+			if (PhoneNumberCustomerRadio.IsChecked == true)
+			{
+				PhoneNumberCustomerLabel.Visibility = Visibility.Visible;
+				PhoneNumberCustomerText.Visibility = Visibility.Visible;
+				LastNameCustomerLabel.Visibility = Visibility.Collapsed;
+				LastNameCustomerText.Visibility = Visibility.Collapsed;
+				PhoneNumberCustomerRadioText.Background = System.Windows.Media.Brushes.Aquamarine;
+				LastNameCustomerRadioText.Background = System.Windows.Media.Brushes.DimGray;
+			}
+			else
+			{
+				LastNameCustomerLabel.Visibility = Visibility.Visible;
+				LastNameCustomerText.Visibility = Visibility.Visible;
+				PhoneNumberCustomerLabel.Visibility = Visibility.Collapsed;
+				PhoneNumberCustomerText.Visibility = Visibility.Collapsed;
+				PhoneNumberCustomerRadioText.Background = System.Windows.Media.Brushes.DimGray;
+				LastNameCustomerRadioText.Background = System.Windows.Media.Brushes.Aquamarine;
+			}
+		}
+
+		private void CustomerRentalRadio_OnClick(object sender, RoutedEventArgs e)
+		{
+			if (PhoneNumberRentalRadio.IsChecked == true)
+			{
+				RentalCustomerByPhoneNumberLabel.Visibility = Visibility.Visible;
+				PhoneAreaCodeRentalCombo.Visibility = Visibility.Visible;
+				PhonePrefixRentalCombo.Visibility = Visibility.Visible;
+				PhoneLineNumberRentalCombo.Visibility = Visibility.Visible;
+				RentalCustomerByFirstLastNameLabel.Visibility = Visibility.Collapsed;
+				FirstLastNameRentalCombo.Visibility = Visibility.Collapsed;
+			}
+			else
+			{
+				RentalCustomerByPhoneNumberLabel.Visibility = Visibility.Collapsed;
+				PhoneAreaCodeRentalCombo.Visibility = Visibility.Collapsed;
+				PhonePrefixRentalCombo.Visibility = Visibility.Collapsed;
+				PhoneLineNumberRentalCombo.Visibility = Visibility.Collapsed;
+				RentalCustomerByFirstLastNameLabel.Visibility = Visibility.Visible;
+				FirstLastNameRentalCombo.Visibility = Visibility.Visible;
+			}
+		}
 	}
+
+	
 
 	public class Book
 	{
@@ -834,7 +1251,6 @@ namespace FinalProjectTemplate1
 		public double WeeklyRentCost { get; set; }
 		public double DailyRentCost { get; set; }
 		public int PageCount { get; set; }
-		public DateFormat PublishDate { get; set; }
 		public string Description { get; set; }
 		public string Author { get; set; }
 		public string Category { get; set; }
@@ -851,8 +1267,7 @@ namespace FinalProjectTemplate1
 			Price = 0.0;
 			WeeklyRentCost = 0.0;
 			DailyRentCost = 0.0;
-			PageCount = 0; DateTime localDate = DateTime.Now;
-			PublishDate = new DateFormat(localDate.Year + "-" + localDate.Month + "-" + localDate.Day);
+			PageCount = 0;
 			Description = "";
 			Author = "";
 			Category = "";
@@ -873,7 +1288,6 @@ namespace FinalProjectTemplate1
 			returnStr += "\nWeekly Rental Cost: $" + this.WeeklyRentCost;
 			returnStr += "\nDaily Rental Cost: $" + this.DailyRentCost;
 			returnStr += "\nPage Count: " + this.PageCount;
-			returnStr += "\nPublish Date: " + (this.PublishDate).tostring();
 			returnStr += "\nDescription: " + (this.Description.Length > 25 ? this.Description.Substring(0, 22) + "..." : this.Description);
 			returnStr += "\nAuthor: " + (!string.IsNullOrEmpty(this.Author) ? this.Author : "Unknown");
 			returnStr += "\nCategories: " + (!string.IsNullOrEmpty(this.Category) ? this.Category : "Unknown");
@@ -886,6 +1300,9 @@ namespace FinalProjectTemplate1
 
 	public class Customer
 	{
+		private double discount;
+		private int rentedBooks;
+		private Book[] rentalBooksList;
 		public string FirstName { get; set; }
 		public string LastName { get; set; }
 		public string Address { get; set; }
@@ -896,6 +1313,7 @@ namespace FinalProjectTemplate1
 		public string Email { get; set; }
 		public string Gender { get; set; }
 		public string Password { get; set; }
+		public string Employment { get; set; }
 		public Book FirstBook { get; set; }
 		public Book SecondBook { get; set; }
 
@@ -911,8 +1329,98 @@ namespace FinalProjectTemplate1
 			Email = "";
 			Gender = "";
 			Password = "";
+			Employment = "";
+			discount = 0.0;
 			FirstBook = new Book();
 			SecondBook = new Book();
+			rentedBooks = 0;
+			rentalBooksList = new Book[2];
+			rentalBooksList[0] = null;
+			rentalBooksList[1] = null;
+		}
+
+		public void setDiscount(double discount)
+		{
+			this.discount = discount;
+		}
+
+		public double getDiscountRate()
+		{
+			return discount;
+		}
+
+		public bool setRentedBooksCount(int rentalCount)
+		{
+			if (rentalCount < 0)
+			{
+				MessageBox.Show("You don't have any checked out books to return");
+				return false;
+			}
+
+			else if (rentalCount > 2)
+			{
+				MessageBox.Show("You reached the limit of allowed rentals");
+				return false;
+			}
+
+			else
+			{
+				this.rentedBooks = rentalCount;
+			}
+			return true;
+		}
+
+		public int getRentedBooksCount()
+		{
+			return rentedBooks;
+		}
+
+		public void setRentedBooks(Book bookOne, Book bookTwo)
+		{
+			rentalBooksList[0] = bookOne;
+			rentalBooksList[0] = bookTwo;
+		}
+
+		public Book[] getRentedBooks()
+		{
+			return rentalBooksList;
+		}
+
+		public bool addBookRental(Book rentalBook)
+		{
+			if (setRentedBooksCount(rentedBooks + 1))
+			{
+				rentalBooksList[rentedBooks - 1] = rentalBook;
+				return true;
+			}
+			return false;
+		}
+
+		public void returnBookRental(int rentalIndex)
+		{
+			if (rentalIndex < 1 && rentalIndex > 2)
+			{
+				MessageBox.Show("");
+				return;
+			}
+
+			if (rentedBooks <= 0)
+			{
+				return;
+			}
+
+			rentedBooks--;
+			rentalBooksList[rentalIndex - 1] = null;
+
+			if (rentalIndex == 1)
+			{
+				rentalBooksList[0] = rentalBooksList[1];
+				rentalBooksList[1] = null;
+			}
+			else
+			{
+				rentalBooksList[1] = null;
+			}
 		}
 
 		public string GetCustomerDetail()
@@ -927,6 +1435,7 @@ namespace FinalProjectTemplate1
 			returnStr += "\nEmail: " + Email;
 			returnStr += "\nGender: " + Gender;
 			returnStr += "\nPassword: " + "***";
+			returnStr += "\nEmployment: " + Employment;
 			returnStr += "\nFirst Book: " + FirstBook == null ? "None" : "" + FirstBook.ID;
 			returnStr += "\nSecond Book: " + SecondBook == null ? "None" : "" + SecondBook.ID;
 			return returnStr;
@@ -982,10 +1491,8 @@ namespace FinalProjectTemplate1
 		{
 			DateTime date = new DateTime(this.Year, this.Month, this.Day);
 			date = date.AddDays(daysToAdd);
-			this.Year = date.Year;
-			this.Month = date.Month;
-			this.Day = date.Day;
-			return this;
+			DateFormat newDate = new DateFormat(date.Year + "-" + date.Month + "-" + date.Day);
+			return newDate;
 		}
 
 		public int DaysApart(DateFormat laterDateFormat)

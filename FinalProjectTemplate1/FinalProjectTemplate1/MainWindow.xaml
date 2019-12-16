@@ -5,9 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FinalProjectTemplate1"
         mc:Ignorable="d"
-        Title="Library Management System" Height="550" Width="725" ResizeMode="NoResize" Icon="Resources/favicon.ico">
+        Title="Library Management System" Height="740" Width="1000" ResizeMode="NoResize" Icon="Resources/favicon.ico">
     <Grid>
-        <TabControl x:Name="tabControl" HorizontalAlignment="Right" Height="425" Margin="0,15,22,0" VerticalAlignment="Top" Width="675" SelectionChanged="TabControl_OnSelectionChanged">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="363*"/>
+            <ColumnDefinition Width="631*"/>
+        </Grid.ColumnDefinitions>
+        <TabControl x:Name="tabControl" HorizontalAlignment="Right" Height="615" Margin="0,15,22,0" VerticalAlignment="Top" Width="950" SelectionChanged="TabControl_OnSelectionChanged" Grid.ColumnSpan="2">
             <TabControl.Background>
                 <ImageBrush ImageSource="Resources/books.jpg"  Opacity="0.8"/>
             </TabControl.Background>
@@ -60,6 +64,7 @@
                     <Button x:Name="SaveDatabaseBtn" Content="Save to Database" Grid.RowSpan="2" Grid.ColumnSpan="4" Grid.Row="3" Grid.Column="1" Margin="15, 15, 15, 45" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Collapsed"  Click="SaveDatabaseBtn_OnClick">
                     </Button>
                 </Grid>
+
             </TabItem>
 
             <TabItem Header="Book Rental System">
@@ -126,14 +131,25 @@
                     </Label>
                     <ComboBox x:Name="RentBookByISBNCombo" Grid.RowSpan="2" Grid.ColumnSpan="8" FontSize="10" Grid.Column="10" Grid.Row="6" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6" LostFocus="BookRentalISBNDropDownClosedMethod">
                     </ComboBox>
-                    <Label x:Name="RentalCustomerByPhoneNumberLabel" Content="Customer Phone Number:" Grid.RowSpan="2" Grid.ColumnSpan="4" FontSize="12" Grid.Column="2" Grid.Row="8" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="DarkSeaGreen">
+                    <Label x:Name="RentalCustomerByPhoneNumberLabel" Content="Customer Phone Number:" Grid.RowSpan="2" Grid.ColumnSpan="4" FontSize="12" Grid.Column="2" Grid.Row="10" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="DarkSeaGreen" Visibility="Collapsed">
                     </Label>
-                    <ComboBox x:Name="PhoneAreaCodeRentalCombo" Grid.RowSpan="2" Grid.ColumnSpan="2" FontSize="10" Grid.Column="10" Grid.Row="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3,3,3,3">
+                    <ComboBox x:Name="PhoneAreaCodeRentalCombo" Grid.RowSpan="2" Grid.ColumnSpan="2" FontSize="10" Grid.Column="10" Grid.Row="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3,3,3,3" Visibility="Collapsed" LostFocus="PhoneAreaCodeRentalComboClosedMethod">
                     </ComboBox>
-                    <ComboBox x:Name="PhonePrefixRentalCombo" Grid.RowSpan="2" Grid.ColumnSpan="2" FontSize="10" Grid.Column="12" Grid.Row="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3,3,3,3">
+                    <ComboBox x:Name="PhonePrefixRentalCombo" Grid.RowSpan="2" Grid.ColumnSpan="2" FontSize="10" Grid.Column="12" Grid.Row="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3,3,3,3" Visibility="Collapsed" LostFocus="PhonePrefixRentalComboClosedMethod">
                     </ComboBox>
-                    <ComboBox x:Name="PhoneLineNumberRentalCombo" Grid.RowSpan="2" Grid.ColumnSpan="3" FontSize="10" Grid.Column="14" Grid.Row="8" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3,3,3,3">
+                    <ComboBox x:Name="PhoneLineNumberRentalCombo" Grid.RowSpan="2" Grid.ColumnSpan="3" FontSize="10" Grid.Column="14" Grid.Row="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3,3,3,3" Visibility="Collapsed" LostFocus="PhoneLineNumberRentalComboClosedMethod">
                     </ComboBox>
+                    <Label x:Name="RentalCustomerByFirstLastNameLabel" Content="Customer Name:" Grid.RowSpan="2" Grid.ColumnSpan="4" FontSize="12" Grid.Column="2" Grid.Row="10" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="DarkSeaGreen" Visibility="Visible">
+                    </Label>
+                    <ComboBox x:Name="FirstLastNameRentalCombo" Grid.RowSpan="2" Grid.ColumnSpan="8" FontSize="10" Grid.Column="10" Grid.Row="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3,3,3,3" Visibility="Visible" LostFocus="FirstLastNameRentalComboClosedMethod">
+                    </ComboBox>
+
+                    <RadioButton x:Name="PhoneNumberRentalRadio" Grid.RowSpan="2" Grid.ColumnSpan="6" FontSize="18" Grid.Column="3" Grid.Row="13" IsChecked="False"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="Aquamarine" Click="CustomerRentalRadio_OnClick">
+                        <TextBlock x:Name="PhoneNumberRentalRadioText" Text="Customer by Phone Number"  Margin="-3,-5,0,0" FontSize="18" Background="LawnGreen"/>
+                    </RadioButton>
+                    <RadioButton x:Name="NameRentalRadio" Grid.RowSpan="2" Grid.ColumnSpan="6" FontSize="18" Grid.Column="12" Grid.Row="13" IsChecked="True"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="Aquamarine" Click="CustomerRentalRadio_OnClick">
+                        <TextBlock x:Name="NameRentalRadioText" Text="Customer by Name"  Margin="-3,-5,0,0" FontSize="18" Background="LawnGreen"/>
+                    </RadioButton>
                     <Button x:Name="RentABookBtn" Content="Rent" Grid.RowSpan="3" Grid.ColumnSpan="8" Grid.Row="16" Grid.Column="6" Margin="0,0,0,10" FontSize="30" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="RentABookBtn_OnClick">
                     </Button>
                 </Grid>
@@ -196,10 +212,16 @@
                     <Label x:Name="BookHeaderLabel" Content="F i n d   A   B o o k" Grid.RowSpan="3" Grid.ColumnSpan="8" FontSize="30" Grid.Column="6" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Tan">
                     </Label>
 
+
+                    <Button x:Name="DeleteBookManagementBtn" Content="Delete Book" Grid.RowSpan="2" Grid.ColumnSpan="5" Grid.Row="3" Grid.Column="12" Margin="0,6,0,6" FontSize="12" HorizontalAlignment="Stretch" VerticalAlignment="Top" Visibility="Visible" Background="Crimson" Click="DeleteBookManagementBtn_OnClick">
+                    </Button>
+
                     <Label x:Name="BookISBNBookManagementLabel" Content="Book ISBN" Grid.RowSpan="2" Grid.ColumnSpan="3" FontSize="10" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6" Background="DarkSeaGreen">
                     </Label>
                     <ComboBox x:Name="BookISBNBookManagementCombo" Grid.RowSpan="2" Grid.ColumnSpan="5" FontSize="10" Grid.Column="5" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6" LostFocus="BookISBNDropDownClosedMethod">
                     </ComboBox>
+                    <TextBox x:Name="BookISBNBookManagementText" Text="" Grid.RowSpan="2" Grid.ColumnSpan="5" FontSize="10" Grid.Column="12" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6" Visibility="Collapsed" GotKeyboardFocus="ClearTextBoxMethod">
+                    </TextBox>
 
                     <Label x:Name="BookTitleBookManagementLabel" Content="Book Title" Grid.RowSpan="2" Grid.ColumnSpan="3" FontSize="10" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,6,0,6" Background="DarkSeaGreen">
                     </Label>
@@ -244,7 +266,19 @@
                     </TextBox>
 
 
-                    <Button x:Name="UpdateBookManagementBtn" Content="Update Book" Grid.RowSpan="4" Grid.ColumnSpan="8" Grid.Row="17" Grid.Column="6" Margin="15, 20, 15, 0" FontSize="20" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="DarkSeaGreen" Click="UpdateBookManagementBtn_OnClick">
+                    <Button x:Name="AddBookManagementBtn" Content="Add Book" Grid.RowSpan="4" Grid.ColumnSpan="8" Grid.Row="17" Grid.Column="2" Margin="15, 20, 15, 0" FontSize="20" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="DarkSeaGreen" Visibility="Visible" Click="AddBookManagementBtn_OnClick">
+                    </Button>
+
+
+                    <Button x:Name="SaveBookManagementBtn" Content="Save New Book" Grid.RowSpan="4" Grid.ColumnSpan="8" Grid.Row="17" Grid.Column="2" Margin="15, 20, 15, 0" FontSize="20" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="DarkSeaGreen" Visibility="Collapsed" Click="SaveBookManagementBtn_OnClick">
+                    </Button>
+
+
+                    <Button x:Name="UpdateBookManagementBtn" Content="Update Book" Grid.RowSpan="4" Grid.ColumnSpan="8" Grid.Row="17" Grid.Column="11" Margin="15, 20, 15, 0" FontSize="20" HorizontalAlignment="Stretch" VerticalAlignment="Top" Background="DarkSeaGreen" Click="UpdateBookManagementBtn_OnClick">
+                    </Button>
+
+
+                    <Button x:Name="CancelBookManagementBtn" Content="Cancel Adding Book" Grid.RowSpan="4" Grid.ColumnSpan="8" Grid.Row="17" Grid.Column="11" Margin="15, 20, 15, 0" FontSize="20" HorizontalAlignment="Stretch" VerticalAlignment="Top" Visibility="Collapsed" Background="DarkSeaGreen" Click="CancelBookManagementBtn_OnClick">
                     </Button>
                 </Grid>
             </TabItem>
@@ -305,59 +339,36 @@
                     </Grid.ColumnDefinitions>
                     <Label x:Name="CustomerHeaderLabel" Content="F i n d   C u s t o m e r s" Grid.RowSpan="3" Grid.ColumnSpan="10" FontSize="30" Grid.Column="5" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Tan">
                     </Label>
-                    <Label x:Name="PhoneNumberCustomerLabel" Content="Enter Phone Number to Search:" Grid.RowSpan="2" Grid.ColumnSpan="6" FontSize="12" Grid.Column="2" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="DarkSeaGreen">
+
+                    <RadioButton x:Name="PhoneNumberCustomerRadio" Grid.RowSpan="2" Grid.ColumnSpan="6" FontSize="12" Grid.Column="2" Grid.Row="4" IsChecked="True"  HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="Aquamarine" Click="PhoneNumberCustomerRadio_OnClick">
+                        <TextBlock x:Name="PhoneNumberCustomerRadioText" Text="Search By Phone"  Margin="-3,-5,0,0" FontSize="18" Background="Aquamarine"/>
+                    </RadioButton>
+
+                    <RadioButton x:Name="LastNameCustomerRadio" Grid.RowSpan="2" Grid.ColumnSpan="6" FontSize="12" Grid.Column="10" Grid.Row="4" IsChecked="False" HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Background="Aquamarine" Click="PhoneNumberCustomerRadio_OnClick">
+                        <TextBlock x:Name="LastNameCustomerRadioText" Text="Search By Last Name"  Margin="-3,-5,0,0" FontSize="18" Background="Aquamarine"/>
+                    </RadioButton>
+
+                    <Label x:Name="PhoneNumberCustomerLabel"  Grid.RowSpan="2" Grid.ColumnSpan="7" FontSize="12" Grid.Column="2" Grid.Row="8" Visibility="Visible" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="DarkSeaGreen">
+                        <TextBlock>
+                            <Run FontSize="12" FontWeight="Normal" FontStyle="Normal">Enter </Run>
+                            <Run FontSize="18" FontWeight="Bold" FontStyle="Italic" Foreground="Firebrick">Phone Number</Run>
+                            <Run FontSize="12" FontWeight="Normal" FontStyle="Normal"> to search:</Run>
+                        </TextBlock>
                     </Label>
-                    <TextBox x:Name="PhoneNumberCustomerText" Text="" Grid.RowSpan="2" Grid.ColumnSpan="8" FontSize="12" Grid.Column="10" Grid.Row="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1,1,1,1" GotKeyboardFocus="TemplateMethod">
+                    <TextBox x:Name="PhoneNumberCustomerText" Text="" Grid.RowSpan="2" Grid.ColumnSpan="8" FontSize="12" Grid.Column="10" Grid.Row="8" Visibility="Visible" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1,1,1,1" GotKeyboardFocus="TemplateMethod">
+                    </TextBox>
+
+                    <Label x:Name="LastNameCustomerLabel" Grid.RowSpan="2" Grid.ColumnSpan="7" FontSize="12" Grid.Column="2" Grid.Row="8" Visibility="Collapsed" HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="DarkSeaGreen">
+                        <TextBlock>
+                            <Run FontSize="12" FontWeight="Normal" FontStyle="Normal">Enter </Run>
+                            <Run FontSize="18" FontWeight="Bold" FontStyle="Italic" Foreground="Firebrick">Last Name</Run>
+                            <Run FontSize="12" FontWeight="Normal" FontStyle="Normal"> to search:</Run>
+                        </TextBlock>
+                    </Label>
+                    <TextBox x:Name="LastNameCustomerText" Text="" Grid.RowSpan="2" Grid.ColumnSpan="8" FontSize="12" Grid.Column="10" Grid.Row="8" Visibility="Collapsed" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1,1,1,1" GotKeyboardFocus="TemplateMethod">
                     </TextBox>
 
                     <Button x:Name="FindCustomerBtn" Content="Search" Grid.RowSpan="4" Grid.ColumnSpan="8" Grid.Row="12" Grid.Column="6" Margin="0,0,0,10" FontSize="30" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="FindCustomerBtn_OnClick">
-                    </Button>
-                </Grid>
-            </TabItem>
-
-            <TabItem Header="Sample">
-                <TabItem.HeaderTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="Resources/bookIcon.jpg" Width="25" Height="25" Stretch="Fill" Opacity="0.3" />
-                            <TextBlock Text="Sample" Margin="0,0,0,0" />
-                        </StackPanel>
-                    </DataTemplate>
-                </TabItem.HeaderTemplate>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition x:Name="SampleRow0" Height="*"/>
-                        <RowDefinition x:Name="SampleRow1" Height="*"/>
-                        <RowDefinition x:Name="SampleRow2" Height="*"/>
-                        <RowDefinition x:Name="SampleRow3" Height="*"/>
-                        <RowDefinition x:Name="SampleRow4" Height="*"/>
-                        <RowDefinition x:Name="SampleRow5" Height="*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition x:Name="SampleCol0" Width="*"/>
-                        <ColumnDefinition x:Name="SampleCol1" Width="*"/>
-                        <ColumnDefinition x:Name="SampleCol2" Width="*"/>
-                        <ColumnDefinition x:Name="SampleCol3" Width="*"/>
-                        <ColumnDefinition x:Name="SampleCol4" Width="*"/>
-                        <ColumnDefinition x:Name="SampleCol5" Width="*"/>
-                    </Grid.ColumnDefinitions>
-                    <Button x:Name="MySampleBtn1" Content="Sample 1" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Row="0" Grid.Column="0" Margin="5, 5, 5, 5" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="MySampleBtn_OnClick">
-                    </Button>
-                    <Button x:Name="MySampleBtn2" Content="Sample 2" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Row="0" Grid.Column="2" Margin="5, 5, 5, 5" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="MySampleBtn_OnClick">
-                    </Button>
-                    <Button x:Name="MySampleBtn3" Content="Sample 3" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Row="0" Grid.Column="4" Margin="5, 5, 5, 5" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="MySampleBtn_OnClick">
-                    </Button>
-                    <Button x:Name="MySampleBtn4" Content="Sample 4" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Row="2" Grid.Column="0" Margin="5, 5, 5, 5" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="MySampleBtn_OnClick">
-                    </Button>
-                    <Button x:Name="MySampleBtn5" Content="Sample 5" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Row="2" Grid.Column="2" Margin="5, 5, 5, 5" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="MySampleBtn_OnClick">
-                    </Button>
-                    <Button x:Name="MySampleBtn6" Content="Sample 6" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Row="2" Grid.Column="4" Margin="5, 5, 5, 5" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="MySampleBtn_OnClick">
-                    </Button>
-                    <Button x:Name="MySampleBtn7" Content="Sample 7" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Row="4" Grid.Column="0" Margin="5, 5, 5, 5" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="MySampleBtn_OnClick">
-                    </Button>
-                    <Button x:Name="MySampleBtn8" Content="Sample 8" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Row="4" Grid.Column="2" Margin="5, 5, 5, 5" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="MySampleBtn_OnClick">
-                    </Button>
-                    <Button x:Name="MySampleBtn9" Content="Sample 9" Grid.RowSpan="2" Grid.ColumnSpan="2" Grid.Row="4" Grid.Column="4" Margin="5, 5, 5, 5" FontSize="28" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="MySampleBtn_OnClick">
                     </Button>
                 </Grid>
             </TabItem>
@@ -523,6 +534,18 @@
                     <PasswordBox x:Name="Password2RegisterText" Grid.RowSpan="2" Grid.ColumnSpan="4" FontSize="12" Grid.Column="8" Grid.Row="11" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1,1,1,1" GotKeyboardFocus="TemplateMethod">
                     </PasswordBox>
 
+                    <RadioButton x:Name="VeteranDiscountCustomerRadio" Grid.RowSpan="2" Grid.ColumnSpan="6" FontSize="18" Grid.Column="2" Grid.Row="13" IsChecked="False"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="Aquamarine" Click="PhoneNumberCustomerRadio_OnClick">
+                        <TextBlock x:Name="VeteranDiscountCustomerRadioText" Text="Veteran"  Margin="-3,-5,0,0" FontSize="18" Background="Aqua"/>
+                    </RadioButton>
+
+                    <RadioButton x:Name="StudentDiscountCustomerRadio" Grid.RowSpan="2" Grid.ColumnSpan="6" FontSize="18" Grid.Column="6" Grid.Row="13" IsChecked="False"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="Aquamarine" Click="PhoneNumberCustomerRadio_OnClick">
+                        <TextBlock x:Name="StudentDiscountCustomerRadioText" Text="Student"  Margin="-3,-5,0,0" FontSize="18" Background="LawnGreen"/>
+                    </RadioButton>
+
+                    <RadioButton x:Name="NoDiscountCustomerRadio" Grid.RowSpan="2" Grid.ColumnSpan="6" FontSize="18" Grid.Column="10" Grid.Row="13" IsChecked="True"  HorizontalAlignment="Stretch" VerticalAlignment="Center" Background="Aquamarine" Click="PhoneNumberCustomerRadio_OnClick">
+                        <TextBlock x:Name="NoDiscountCustomerRadioText" Text="Neither"  Margin="-3,-5,0,0" FontSize="18" Background="CornflowerBlue"/>
+                    </RadioButton>
+
                     <Button x:Name="SignUpRegisterBtn" Content="SIGN UP" Grid.RowSpan="2" Grid.ColumnSpan="4" Grid.Row="15" Grid.Column="1" Margin="0,0,0,10" FontSize="22" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="SignUpRegisterBtn_OnClick">
                     </Button>
 
@@ -571,8 +594,10 @@
                         <ColumnDefinition x:Name="BookDetailCol11" Width="*"/>
                     </Grid.ColumnDefinitions>
 
+                    <Label x:Name="BookDetailsHeaderLabel" Content=" B O O K   S U M M A R Y" Grid.RowSpan="2" Grid.ColumnSpan="6" FontSize="28" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Tan">
+                    </Label>
                     <TextBox
-                        Name="BookDetailsTextBox" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Text="" Grid.RowSpan="9" Grid.ColumnSpan="12" FontSize="14" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1,1,1,1">
+                        Name="BookDetailsTextBox" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Text="" Grid.RowSpan="9" Grid.ColumnSpan="12" FontSize="14" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1,1,1,1" FontFamily="Microsoft Sans Serif">
                     </TextBox>
 
                     <Button x:Name="ClearBookDetailBtn" Content="Clear Search" Grid.RowSpan="1" Grid.ColumnSpan="4" Grid.Row="11" Grid.Column="4" Margin="0,0,0,0" FontSize="18" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="ClearBookDetailBtn_OnClick">
@@ -620,8 +645,11 @@
                         <ColumnDefinition x:Name="CustomerDetailCol11" Width="*"/>
                     </Grid.ColumnDefinitions>
 
+                    <Label x:Name="CustomerDetailsHeaderLabel" Content="  C U S T O M E R   S U M M A R Y" Grid.RowSpan="2" Grid.ColumnSpan="8" FontSize="28" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Tan" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="30,20,30,20">
+                    </Label>
+
                     <TextBox
-                        Name="CustomerDetailsTextBox" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Text="" Grid.RowSpan="9" Grid.ColumnSpan="12" FontSize="14" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="1,1,1,1">
+                        Name="CustomerDetailsTextBox" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Text="" Grid.RowSpan="9" Grid.ColumnSpan="12" FontSize="14" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="1,1,1,1" FontFamily="Microsoft Sans Serif">
                     </TextBox>
 
                     <Button x:Name="ClearCustomerDetailBtn" Content="Clear Search" Grid.RowSpan="1" Grid.ColumnSpan="4" Grid.Row="11" Grid.Column="4" Margin="0,0,0,0" FontSize="18" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Click="ClearCustomerDetailBtn_OnClick">
@@ -630,6 +658,7 @@
             </TabItem>
 
         </TabControl>
+        <Label x:Name="StatusNotificationLabel" Content="Everything is Up To Date" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="22,646,22,12" VerticalAlignment="Center" Background="Peru" Foreground="LawnGreen" FontSize="20" FontWeight="Heavy" Visibility="Visible" Grid.ColumnSpan="2" Width="950" Height="53"/>
 
     </Grid>
 </Window>
